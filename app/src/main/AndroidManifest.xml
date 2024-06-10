@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -13,7 +14,16 @@
         android:theme="@style/Theme.Taskbin"
         tools:targetApi="31">
         <activity
-            android:name=".View.MainActivity"
+            android:name=".View.login"
+            android:exported="false" />
+        <activity
+            android:name=".View.Welcome"
+            android:exported="false" />
+        <activity android:name=".View.MainActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".View.Splash"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,9 +31,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".View.Signin.inputPass"
+            android:exported="false" />
+        <activity
+            android:name=".View.Signin.inputPhone"
+            android:exported="false" />
+        <activity
+            android:name=".View.Signin.inputUserName"
+            android:exported="false" />
     </application>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
