@@ -23,6 +23,10 @@ class UserViewModel(private val repository: UserRepository) : ViewModel() {
         callback(user)
     }
 
+    fun getUserByUsername(username: String, callback: (UserEntity?) -> Unit) = viewModelScope.launch {
+       val user = repository.getUserByUsername(username)
+    }
+
     fun fetchUserByUsername(username: String) = viewModelScope.launch {
         val user = repository.getUserByUsername(username)
         _userByUsername.postValue(user)

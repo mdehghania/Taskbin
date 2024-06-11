@@ -7,7 +7,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.taskbin.MyApplication
 import com.example.taskbin.R
-import com.example.taskbin.View.Signin.inputUserName
 import com.example.taskbin.ViewModel.UserViewModel
 import com.example.taskbin.ViewModel.ViewModelFactory
 
@@ -32,7 +31,7 @@ class Splash : AppCompatActivity() {
             val intent = if (user != null) {
                 Intent(this, login::class.java)
             } else {
-                Intent(this, inputUserName::class.java)
+                Intent(this, Welcome::class.java)
             }
             startActivity(intent)
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)

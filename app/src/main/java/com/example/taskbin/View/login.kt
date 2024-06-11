@@ -37,7 +37,13 @@ class login : AppCompatActivity() {
             } else {
                 userViewModel.getUser(userName, userPass) { user ->
                     if (user != null) {
-                        val intent = Intent(this, MainActivity::class.java)
+                        // ذخیره نام کاربری در SharedPreferences
+                        val sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE)
+                        val editor = sharedPreferences.edit()
+                        editor.putString("username", userName)
+                        editor.apply()
+
+                        val intent = Intent(this, Profile::class.java)
                         startActivity(intent)
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
 

@@ -55,15 +55,17 @@
         android:id="@+id/btnStart"
         android:layout_width="254dp"
         android:layout_height="53dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="33dp"
         android:backgroundTint="@color/orange"
         android:text="a"
         android:textColor="#00FFFFFF"
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toTopOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/imageView5"
@@ -75,4 +77,19 @@
         app:layout_constraintStart_toStartOf="@+id/btnStart"
         app:layout_constraintTop_toTopOf="@+id/btnStart"
         app:srcCompat="@drawable/textstartbtn" />
+
+    <TextView
+        android:id="@+id/txtAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="17dp"
+        android:fontFamily="@font/vazir"
+        android:text="اگر حساب کاربری دارید اینجا کلیک کنید."
+        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnStart"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
