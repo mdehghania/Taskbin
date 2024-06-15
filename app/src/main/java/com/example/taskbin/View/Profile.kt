@@ -10,7 +10,7 @@ import com.example.taskbin.R
 class Profile : AppCompatActivity() {
     private lateinit var userNameTextView: TextView
     private lateinit var btnBackP: ImageButton
-    private lateinit var btnLogout: ImageButton
+    private lateinit var btnLogout: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
