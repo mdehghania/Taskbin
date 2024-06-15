@@ -2,139 +2,166 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/btnInfo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".View.Profile">
 
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="410dp"
-        android:layout_height="120dp"
-        android:background="@drawable/upbox"
-        android:orientation="vertical"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview1"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:cardCornerRadius="2dp"
+        app:cardElevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
-            android:id="@+id/btnBackP"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="350dp"
-            android:layout_marginTop="20dp"
-            android:background="#00FFFFFF"
-            android:layoutDirection="rtl"
-            android:src="@drawable/backleft"
-            android:textAlignment="center" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="230dp"
-            android:layout_marginTop="-40dp"
-            android:fontFamily="@font/vazir"
-            android:text="حساب کاربری"
-            android:textSize="22dp" />
+            <ImageButton
 
-    </LinearLayout>
+                android:id="@+id/btnBackP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:background="#00FFFFFF"
+                android:src="@drawable/backleft"
+                android:text="cardview"
+                android:textSize="18dp" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="410dp"
-        android:layout_height="200dp"
-        android:background="@drawable/layer"
-        android:orientation="vertical"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview2"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="110dp"
+        android:layout_marginEnd="24dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toTopOf="@id/cardview1">
 
-        <ImageView
-            android:id="@+id/imageView9"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginLeft="270dp"
-            android:layout_marginTop="60dp"
-            android:src="@drawable/avatar"
-            app:srcCompat="@drawable/avatar" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/userNamePtxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="220dp"
-            android:layout_marginTop="-60dp"
-            android:fontFamily="@font/vazir"
-            android:text="User"
-            android:textDirection="rtl" />
+            <ImageView
+                android:id="@+id/avatarImage"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="50dp"
+                android:src="@drawable/avatar">
 
-        <TextView
-            android:id="@+id/editInfotxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="160dp"
-            android:fontFamily="@font/vazir"
-            android:text="ویرایش اطلاعات"
-            android:textColor="#0E0B7B"
-            android:textDirection="rtl" />
+            </ImageView>
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/userNametxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="160dp"
+                android:layout_marginBottom="80dp"
+                android:fontFamily="@font/vazir"
+                android:text="username"
+                android:textAlignment="textEnd"
+                android:textSize="14dp">
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="410dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="200dp"
-        android:background="@drawable/layer"
-        android:orientation="vertical"
+            </TextView>
+
+            <TextView
+                android:id="@+id/editUserNametxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="130dp"
+                android:layout_marginBottom="50dp"
+                android:fontFamily="@font/vazir"
+                android:text="ویرایش اطلاعات"
+                android:textColor="#541EB3"
+                android:textSize="14dp"></TextView>
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="24dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/cardview2">
 
-        <ImageButton
-            android:id="@+id/btnInfo"
-            android:layout_width="100dp"
-            android:layout_height="31dp"
-            android:layout_marginLeft="640px"
-            android:layout_marginTop="120px"
-            android:background="@drawable/infobutton" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <ImageButton
-            android:id="@+id/btnLogout"
-            android:layout_width="85dp"
-            android:layout_height="32dp"
-            android:layout_marginLeft="680px"
-            android:layout_marginTop="60px"
-            android:background="@drawable/logoutbutton" />
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="25dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="180dp"
+                android:layout_marginTop="40dp"
+                android:background="#00FFFFFF"
+                android:src="@drawable/infobutton">
 
-    </LinearLayout>
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/logOut"
+                android:layout_width="200dp"
+                android:layout_height="25dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="205dp"
+                android:layout_marginTop="80dp"
+                android:background="#00FFFFFF"
+                android:src="@drawable/logoutbutton">
+
+            </ImageView>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
     <ImageView
-        android:id="@+id/imageView10"
+        android:id="@+id/imageView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="35dp"
+        android:src="@drawable/socialmedia"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-        app:layout_constraintVertical_bias="0.721"
-        app:srcCompat="@drawable/socialmedia" />
+        app:layout_constraintStart_toStartOf="parent">
+
+    </ImageView>
 
     <TextView
-        android:id="@+id/versiontxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:fontFamily="@font/vazir"
-        android:text="نسخه 1.0  "
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:fontFamily="@font/Vazir"
+        android:text="نسخه 1.0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView10"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView9">
+
+    </TextView>
 </androidx.constraintlayout.widget.ConstraintLayout>
