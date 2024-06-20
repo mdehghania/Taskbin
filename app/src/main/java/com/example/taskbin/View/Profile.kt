@@ -3,6 +3,7 @@ package com.example.taskbin.View
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.taskbin.R
@@ -10,14 +11,14 @@ import com.example.taskbin.R
 class Profile : AppCompatActivity() {
     private lateinit var userNameTextView: TextView
     private lateinit var btnBackP: ImageButton
-    private lateinit var btnLogout: ImageButton
+    private lateinit var btnLogout: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
         // مقداردهی ویوها
-        userNameTextView = findViewById(R.id.userNamePtxt)
+        userNameTextView = findViewById(R.id.userNametxt)
         btnBackP = findViewById(R.id.btnBackP)
         btnLogout = findViewById(R.id.btnLogout)
 
