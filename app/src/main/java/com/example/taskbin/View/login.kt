@@ -43,7 +43,7 @@ class login : AppCompatActivity() {
                         editor.putString("username", userName)
                         editor.apply()
 
-                        val intent = Intent(this, Profile::class.java)
+                        val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
 
