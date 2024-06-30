@@ -7,26 +7,65 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import com.example.taskbin.MyApplication
 import com.example.taskbin.R
 import com.example.taskbin.ViewModel.UserViewModel
 import com.example.taskbin.ViewModel.ViewModelFactory
+import java.util.concurrent.Executor
 
 class login : AppCompatActivity() {
     private lateinit var userNameEditText: EditText
     private lateinit var userPassEditText: EditText
     private lateinit var btnNextLogin: ImageButton
+    private lateinit var btnFingerprintLogin: ImageButton
     private val userViewModel: UserViewModel by viewModels {
         ViewModelFactory((application as MyApplication).userRepository)
     }
+    private lateinit var biometricPrompt: BiometricPrompt
+    private lateinit var promptInfo: BiometricPrompt.PromptInfo
+    private lateinit var executor: Executor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)  // مطمئن شوید که نام فایل XML صحیح است
+        setContentView(R.layout.activity_login)
 
-        userNameEditText = findViewById(R.id.edittext)  // مطمئن شوید که شناسه صحیح است
-        userPassEditText = findViewById(R.id.editTextText)  // مطمئن شوید که شناسه صحیح است
-        btnNextLogin = findViewById(R.id.btnNextLogin)  // مطمئن شوید که شناسه صحیح است
+        userNameEditText = findViewById(R.id.edittext)
+        userPassEditText = findViewById(R.id.editTextText)
+        btnNextLogin = findViewById(R.id.btnNextLogin)
+        btnFingerprintLogin = findViewById(R.id.btnFingerprintLogin)
+
+        executor = ContextCompat.getMainExecutor(this)
+        biometricPrompt = BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
+            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                super.onAuthenticationError(errorCode, errString)
+                Toast.makeText(applicationContext, "Authentication error: $errString", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                super.onAuthenticationSucceeded(result)
+                Toast.makeText(applicationContext, "Authentication succeeded!", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@login, MainActivity::class.java)
+                startActivity(intent)
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            }
+
+            override fun onAuthenticationFailed() {
+                super.onAuthenticationFailed()
+                Toast.makeText(applicationContext, "Authentication failed", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Biometric login for my app")
+            .setSubtitle("Log in using your biometric credential")
+            .setNegativeButtonText("Use account password")
+            .build()
+
+        btnFingerprintLogin.setOnClickListener {
+            biometricPrompt.authenticate(promptInfo)
+        }
 
         btnNextLogin.setOnClickListener {
             val userName = userNameEditText.text.toString()
@@ -46,7 +85,6 @@ class login : AppCompatActivity() {
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-
                     } else {
                         Toast.makeText(this, "نام کاربری یا رمز عبور نادرست است!", Toast.LENGTH_SHORT).show()
                     }
