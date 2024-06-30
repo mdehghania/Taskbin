@@ -1,5 +1,6 @@
 package com.example.taskbin.Dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -18,6 +19,6 @@ interface ActivityDao {
     @Delete
     suspend fun delete(activity: ActivityEntity)
 
-    @Query("SELECT * FROM activity_table WHERE userOwnerId = :userId")
-    suspend fun getActivitiesByUser(userId: Int): List<ActivityEntity>
+    @Query("SELECT * FROM activity_table WHERE userOwnerId = :userOwnerId")
+    fun getActivitiesByUserOwnerId(userOwnerId: Int): LiveData<List<ActivityEntity>>
 }

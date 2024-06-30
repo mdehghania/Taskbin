@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aminography.primecalendar.persian.PersianCalendar
 import com.example.taskbin.DateAdapter
 import com.example.taskbin.R
+import com.example.taskbin.View.ActivityListFragment
 import com.example.taskbin.View.Profile
 import com.example.taskbin.addDay
 import com.example.taskbin.setDayOfMonth
@@ -46,6 +47,7 @@ class HomeFragment : Fragment() {
 
         adapter = DateAdapter(requireContext(), dates) { date ->
             selectedDate = date
+
         }
         recyclerView.adapter = adapter
 
@@ -61,6 +63,13 @@ class HomeFragment : Fragment() {
                 handler.postDelayed(this, 24 * 60 * 60 * 1000)
             }
         })
+
+        // اینجا اضافه کردن Fragment به FrameLayout
+        if (savedInstanceState == null) {
+            childFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainerView, ActivityListFragment())
+                .commit()
+        }
 
         return view
     }

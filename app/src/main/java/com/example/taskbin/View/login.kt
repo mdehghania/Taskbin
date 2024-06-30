@@ -29,12 +29,17 @@ class login : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_login)  // مطمئن شوید که نام فایل XML صحیح است
 
-        userNameEditText = findViewById(R.id.edittext)
-        userPassEditText = findViewById(R.id.editTextText)
-        btnNextLogin = findViewById(R.id.btnNextLogin)
-        btnFingerprintLogin = findViewById(R.id.btnFingerprintLogin)
+        userNameEditText = findViewById(R.id.edittext)  // مطمئن شوید که شناسه صحیح است
+        userPassEditText = findViewById(R.id.editTextText)  // مطمئن شوید که شناسه صحیح است
+        btnNextLogin = findViewById(R.id.btnNextLogin)  // مطمئن شوید که شناسه صحیح است
+        btnFingerprintLogin = findViewById(R.id.btnFingerprintLogin)  // مطمئن شوید که شناسه صحیح است
+
+        // Load saved username if available
+        val sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE)
+        val savedUsername = sharedPreferences.getString("username", "")
+        userNameEditText.setText(savedUsername)
 
         executor = ContextCompat.getMainExecutor(this)
         biometricPrompt = BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
@@ -46,9 +51,26 @@ class login : AppCompatActivity() {
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 super.onAuthenticationSucceeded(result)
                 Toast.makeText(applicationContext, "Authentication succeeded!", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this@login, MainActivity::class.java)
-                startActivity(intent)
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                val userName = userNameEditText.text.toString()
+                if (userName.isNotEmpty()) {
+                    userViewModel.getUserByUsername(userName) { user ->
+                        if (user != null) {
+                            // ذخیره userId در SharedPreferences
+                            val editor = sharedPreferences.edit()
+                            editor.putString("username", userName)
+                            editor.putInt("userOwnerId", user.userId)
+                            editor.apply()
+
+                            val intent = Intent(this@login, MainActivity::class.java)
+                            startActivity(intent)
+                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                        } else {
+                            Toast.makeText(applicationContext, "User not found", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } else {
+                    Toast.makeText(applicationContext, "Please enter your username", Toast.LENGTH_SHORT).show()
+                }
             }
 
             override fun onAuthenticationFailed() {
@@ -76,10 +98,10 @@ class login : AppCompatActivity() {
             } else {
                 userViewModel.getUser(userName, userPass) { user ->
                     if (user != null) {
-                        // ذخیره نام کاربری در SharedPreferences
-                        val sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE)
+                        // ذخیره نام کاربری و userId در SharedPreferences
                         val editor = sharedPreferences.edit()
                         editor.putString("username", userName)
+                        editor.putInt("userOwnerId", user.userId)  // اضافه کردن userId
                         editor.apply()
 
                         val intent = Intent(this, MainActivity::class.java)

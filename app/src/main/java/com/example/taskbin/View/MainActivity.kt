@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.example.taskbin.Fragment.AddActivityFragment
 import com.example.taskbin.Fragment.AddProjectFragment
 import com.example.taskbin.Fragment.AddTargetFragment
 import com.example.taskbin.Fragment.FolderFragment
