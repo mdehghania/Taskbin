@@ -1,5 +1,6 @@
 package com.example.taskbin.ViewModel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.taskbin.Model.TargetEntity
@@ -20,8 +21,7 @@ class TargetViewModel(private val repository: TargetRepository) : ViewModel() {
         repository.delete(target)
     }
 
-    fun getTargetsByUser(userId: Int, callback: (List<TargetEntity>) -> Unit) = viewModelScope.launch {
-        val targets = repository.getTargetsByUser(userId)
-        callback(targets)
+    fun getTargetsByUserOwnerId(userOwnerId: Int): LiveData<List<TargetEntity>> {
+        return repository.getTargetsByUser(userOwnerId)
     }
 }

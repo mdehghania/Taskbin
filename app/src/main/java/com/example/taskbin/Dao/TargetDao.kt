@@ -1,5 +1,6 @@
 package com.example.taskbin.Dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -20,4 +21,12 @@ interface TargetDao {
 
     @Query("SELECT * FROM target_table WHERE userOwnerId = :userId")
     suspend fun getTargetsByUser(userId: Int): List<TargetEntity>
+
+    @Query("SELECT * FROM target_table WHERE userOwnerId = :userOwnerId")
+    fun getTargetsByUserOwnerId(userOwnerId: Int): LiveData<List<TargetEntity>>
+
+    @Query("SELECT * FROM target_table")
+    fun getAllTargets(): LiveData<List<TargetEntity>>
+
+
 }

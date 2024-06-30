@@ -17,5 +17,6 @@ data class TargetEntity(
     @PrimaryKey(autoGenerate = true) val targetId: Int = 0,
     val tName: String,
     val tDesc: String,
-    val userOwnerId: Int
+    val userOwnerId: Int,
+    val completed: Boolean
 )
