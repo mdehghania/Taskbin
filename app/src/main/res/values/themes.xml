@@ -3,8 +3,16 @@
     <style name="Base.Theme.Taskbin" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-<!--        <item name="android:fontFamily">@font/vazir.ttf</item>-->
+        <!--        <item name="android:fontFamily">@font/vazir.ttf</item>-->
+
+        <item name="colorPrimary">@color/orange</item>
+        <item name="android:statusBarColor">@color/orange</item>
+        <item name="bottomNavigationStyle">@style/BottomNavActiveIndicatorStyle</item>
+
+
     </style>
 
+
     <style name="Theme.Taskbin" parent="Base.Theme.Taskbin" />
+
 </resources>

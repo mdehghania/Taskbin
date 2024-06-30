@@ -9,79 +9,78 @@
 
 
 
-    <LinearLayout
-        android:id="@+id/linearName"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></LinearLayout>
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
+        android:id="@+id/imageViewup"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-10dp"
-        android:src="@drawable/up"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/up_vector"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/up" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="-10dp"
-        android:src="@drawable/down"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:srcCompat="@drawable/down" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.33"
+        tools:ignore="ContentDescription" />
 
     <ImageView
+        android:id="@+id/imageViewdown"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/down_vector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.33"
+        tools:ignore="ContentDescription" />
+
+    <TextView
         android:id="@+id/imageView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/nametext"
+        android:fontFamily="@font/vazirfdwol"
+        android:text="خودتان را معرفی کنید"
+        android:textSize="24dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:srcCompat="@drawable/nametext" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewup"
 
-    <ImageView
+        />
+
+    <TextView
         android:id="@+id/imageView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="75dp"
-        android:layout_marginEnd="40dp"
-        android:src="@drawable/namedesctext"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView6"
-        app:srcCompat="@drawable/namedesctext" />
+        android:text="نام و نام خانوادگی خود را وارد کنید :"
+        android:fontFamily="@font/vazirfdwol"
+        android:textSize="22dp"
+        />
 
     <EditText
         android:id="@+id/txtUserName"
         android:layout_width="380dp"
         android:layout_height="59dp"
-        android:layout_marginTop="-100dp"
         android:layout_marginBottom="100dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/inputs"
         android:ems="10"
         android:inputType="text"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:textSize="24px"
-        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        android:fontFamily="@font/vazirfdwol"
+        android:textSize="18dp"
+        android:textDirection="rtl"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+    />
 
     <ImageButton
         android:id="@+id/btnNext"
@@ -89,15 +88,15 @@
         android:layout_height="39dp"
         android:layout_marginStart="330dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/btnnext"
+        android:background="@drawable/btnnext_vector"
         android:backgroundTintMode="add"
         android:hapticFeedbackEnabled="false"
         android:scaleType="centerCrop"
-        android:src="@drawable/btnnext"
-        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        android:src="@drawable/btnnext_vector"
+        app:layout_constraintBottom_toTopOf="@+id/imageViewdown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtUserName"
-        app:srcCompat="@drawable/btnnext" />
+        app:srcCompat="@drawable/btnnext_vector" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

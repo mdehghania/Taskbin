@@ -18,8 +18,6 @@ class UserRepository(private val userDao: UserDao) {
         return userDao.getUser(username, password)
     }
 
-
-
     suspend fun getUserByUsername(username: String): UserEntity? {
         return userDao.getUserByUsername(username)
     }

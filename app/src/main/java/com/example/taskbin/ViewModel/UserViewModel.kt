@@ -8,7 +8,6 @@ import com.example.taskbin.Model.UserEntity
 import com.example.taskbin.Repository.UserRepository
 import kotlinx.coroutines.launch
 
-
 class UserViewModel(private val repository: UserRepository) : ViewModel() {
 
     private val _userByUsername = MutableLiveData<UserEntity?>()
@@ -24,7 +23,8 @@ class UserViewModel(private val repository: UserRepository) : ViewModel() {
     }
 
     fun getUserByUsername(username: String, callback: (UserEntity?) -> Unit) = viewModelScope.launch {
-       val user = repository.getUserByUsername(username)
+        val user = repository.getUserByUsername(username)
+        callback(user)
     }
 
     fun fetchUserByUsername(username: String) = viewModelScope.launch {

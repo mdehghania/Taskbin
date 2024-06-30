@@ -7,49 +7,57 @@
     tools:context=".View.Welcome">
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
+        android:id="@+id/imageViewup"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-10dp"
-        android:src="@drawable/up"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/up_vector"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/up" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.33"
+        tools:ignore="ContentDescription" />
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
+        android:id="@+id/imageViewdown"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="-10dp"
-        android:src="@drawable/down"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/down_vector"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:srcCompat="@drawable/down" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.33"
+        tools:ignore="ContentDescription" />
 
-    <ImageView
+    <TextView
         android:id="@+id/imageView3"
+        android:text="به تسکبین خوش آمدید!"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="90dp"
-        android:src="@drawable/welcom"
+        android:fontFamily="@font/vazirfdwol"
+        android:textSize="22dp"
+        android:textStyle="bold"
+        android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:srcCompat="@drawable/welcom" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewup"
+        />
 
-    <ImageView
+    <TextView
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
-        android:src="@drawable/descwelcom"
+        android:layout_marginTop="30dp"
+        android:text="تسکبین مسیری به سوی زندگی بهتر "
         app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/vazirfdwol"
+        android:textSize="22dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:srcCompat="@drawable/descwelcom" />
+        />
 
     <Button
         android:id="@+id/btnStart"
@@ -57,39 +65,30 @@
         android:layout_height="53dp"
         android:layout_marginTop="33dp"
         android:backgroundTint="@color/orange"
-        android:text="a"
-        android:textColor="#00FFFFFF"
+        android:text="شروع کنید"
+        android:fontFamily="@font/vazirfdwol"
+        android:textSize="16dp"
+        android:textColor="@color/white"
         app:cornerRadius="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintBottom_toTopOf="@+id/imageViewdown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView4"
         app:layout_constraintVertical_bias="0.0" />
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="73dp"
-        android:layout_height="wrap_content"
-        android:src="@drawable/textstartbtn"
-        app:layout_constraintBottom_toBottomOf="@+id/btnStart"
-        app:layout_constraintEnd_toEndOf="@+id/btnStart"
-        app:layout_constraintStart_toStartOf="@+id/btnStart"
-        app:layout_constraintTop_toTopOf="@+id/btnStart"
-        app:srcCompat="@drawable/textstartbtn" />
+
 
     <TextView
         android:id="@+id/txtAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="17dp"
-        android:fontFamily="@font/vazir"
+
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/vazirfdwol"
         android:text="اگر حساب کاربری دارید اینجا کلیک کنید."
-        app:layout_constraintBottom_toTopOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.059"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnStart"
-        app:layout_constraintVertical_bias="1.0" />
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

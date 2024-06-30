@@ -16,9 +16,11 @@ import androidx.room.PrimaryKey
 data class ActivityEntity(
     @PrimaryKey(autoGenerate = true) val activityId: Int = 0,
     val aName: String,
+    val aDescription: String,
     val aCategory: String,
     val aTime: String,
     val aHour: String,
     val aPin: Boolean,
+    val aDate: Long ,
     val userOwnerId: Int
 )

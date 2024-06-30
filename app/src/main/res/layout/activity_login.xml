@@ -7,22 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".View.login">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
-    </LinearLayout>
 
     <EditText
         android:id="@+id/edittext"
         android:layout_width="380dp"
         android:layout_height="59dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/inputs"
         android:ems="10"
         android:hint="نام کاربری"
@@ -31,16 +22,19 @@
         android:paddingRight="20dp"
         android:textColor="#000000"
         android:textDirection="rtl"
+        android:fontFamily="@font/vazirfdwol"
+        android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView8"
         tools:ignore="DuplicateIds" />
 
+
     <EditText
         android:id="@+id/editTextText"
         android:layout_width="380dp"
         android:layout_height="59dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/inputs"
         android:ems="10"
         android:hint="رمز عبور"
@@ -49,59 +43,69 @@
         android:paddingRight="20dp"
         android:textAlignment="textEnd"
         android:textColor="#000000"
+        android:fontFamily="@font/vazirfdwol"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edittext"
         android:textDirection="rtl"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edittext" />
+        />
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
+        android:id="@+id/imageViewup"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-10dp"
-        android:src="@drawable/up"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/up_vector"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/up" />
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="-10dp"
-        android:src="@drawable/down"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:srcCompat="@drawable/down" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.33"
+        tools:ignore="ContentDescription" />
+
 
     <ImageView
+        android:id="@+id/imageViewdown"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/down_vector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.33"
+        tools:ignore="ContentDescription" />
+
+    <TextView
         android:id="@+id/imageView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginEnd="21dp"
+        android:fontFamily="@font/vazirfdwol"
+        android:text="به تسکبین خوش آمدید"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:srcCompat="@drawable/wellcom" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewup" />
 
     <ImageButton
         android:id="@+id/btnNextLogin"
         android:layout_width="45dp"
         android:layout_height="39dp"
-        android:layout_marginStart="330dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/btnnext"
+        android:background="@drawable/btnnext_vector"
         android:backgroundTintMode="add"
         android:hapticFeedbackEnabled="false"
         android:scaleType="centerCrop"
-        android:src="@drawable/btnnext"
+        android:src="@drawable/btnnext_vector"
         android:visibility="visible"
+        android:layout_marginRight="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextText"
-        app:srcCompat="@drawable/btnnext" />
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

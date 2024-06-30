@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- styles.xml -->
+<resources>
+    <style name="BottomNavActiveIndicatorStyle">
+        <item name="android:itemBackground">@drawable/bg_select</item>
+
+    </style>
+</resources>
+

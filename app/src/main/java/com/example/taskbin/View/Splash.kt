@@ -2,7 +2,7 @@ package com.example.taskbin.View
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.taskbin.MyApplication
@@ -11,7 +11,7 @@ import com.example.taskbin.ViewModel.UserViewModel
 import com.example.taskbin.ViewModel.ViewModelFactory
 
 class Splash : AppCompatActivity() {
-    lateinit var iv_note: ImageView
+    lateinit var iv_note: TextView
     private val userViewModel: UserViewModel by viewModels {
         ViewModelFactory((application as MyApplication).userRepository)
     }
