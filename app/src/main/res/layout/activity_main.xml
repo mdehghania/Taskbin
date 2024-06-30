@@ -4,22 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="#F3F3F3"
     tools:context=".View.MainActivity">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <FrameLayout
+        android:id="@+id/frame_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:backgroundTint="#F3F3F3" />
 
-        <RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp" />
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/navigation_shape"
+        app:itemIconSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:itemActiveIndicatorStyle="@style/BottomNavActiveIndicatorStyle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_menu"
+        app:labelVisibilityMode="unlabeled" />
 
-        <!-- Add other UI components for displaying plans here -->
 
-    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

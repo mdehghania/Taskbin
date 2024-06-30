@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/Tropht" android:icon="@drawable/trophy" android:title="Tropht"/>
+    <item android:id="@+id/Folder" android:icon="@drawable/folder"
+        android:title="" />
+    <item android:id="@+id/Home" android:icon="@drawable/home"
+        android:title="" />
+    <item android:id="@+id/Add" android:icon="@drawable/add_square"
+        android:title="" />
+
+</menu>
