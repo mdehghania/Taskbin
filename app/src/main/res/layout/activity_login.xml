@@ -109,18 +109,18 @@
 
     <ImageButton
         android:id="@+id/btnFingerprintLogin"
-        android:layout_width="45dp"
-        android:layout_height="39dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/btnnext_vector"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btnfinger"
         android:backgroundTintMode="add"
         android:hapticFeedbackEnabled="false"
         android:scaleType="centerCrop"
-        android:src="@drawable/btnnext_vector"
+        android:src="@drawable/btnfinger"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnNextLogin" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

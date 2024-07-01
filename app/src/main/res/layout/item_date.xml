@@ -7,9 +7,10 @@
 
     <TextView
         android:id="@+id/tvDayOfWeek"
-        android:layout_width="wrap_content"
+        android:textAlignment="center"
+        android:layout_width="45dp"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
+        android:textSize="11sp"
         android:textColor="@android:color/black"
         android:fontFamily="@font/vazirfdwol"
 
@@ -18,11 +19,12 @@
 
     <TextView
         android:id="@+id/tvDate"
-        android:layout_width="wrap_content"
+        android:textAlignment="center"
+        android:layout_width="45dp"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textColor="@android:color/black"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="15dp"
         android:fontFamily="@font/vazirfdwol"
 
    />

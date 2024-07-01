@@ -21,4 +21,6 @@ interface ActivityDao {
 
     @Query("SELECT * FROM activity_table WHERE userOwnerId = :userOwnerId")
     fun getActivitiesByUserOwnerId(userOwnerId: Int): LiveData<List<ActivityEntity>>
+
+
 }

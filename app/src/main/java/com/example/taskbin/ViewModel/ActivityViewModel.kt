@@ -24,4 +24,5 @@ class ActivityViewModel(private val repository: ActivityRepository) : ViewModel(
     fun delete(activity: ActivityEntity) = viewModelScope.launch {
         repository.delete(activity)
     }
+
 }

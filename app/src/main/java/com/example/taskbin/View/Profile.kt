@@ -40,7 +40,7 @@ class Profile : AppCompatActivity() {
         editUserNametxt = findViewById(R.id.editUserNametxt)
 
         // بازیابی نام کاربری از SharedPreferences
-        val sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE)
         val userName = sharedPreferences.getString("username", "User")
 
         // بازیابی و نمایش نام کاربری از ViewModel
@@ -127,7 +127,7 @@ class Profile : AppCompatActivity() {
 
                 // به‌روزرسانی SharedPreferences برای نام کاربری جدید
                 if (newUserName.isNotBlank()) {
-                    val sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE)
+                    val sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE)
                     with(sharedPreferences.edit()) {
                         putString("username", newUserName)
                         apply()

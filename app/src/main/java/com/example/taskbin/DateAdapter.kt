@@ -32,7 +32,7 @@ class DateAdapter(
         if (position == selectedPosition) {
             val drawable = GradientDrawable()
             drawable.setColor(Color.parseColor("#F86E3F"))
-            drawable.cornerRadius = 16f
+            drawable.cornerRadius = 45f
             holder.itemView.background = drawable
             holder.tvDate.setTextColor(Color.WHITE)
             holder.tvDayOfWeek.setTextColor(Color.WHITE)
