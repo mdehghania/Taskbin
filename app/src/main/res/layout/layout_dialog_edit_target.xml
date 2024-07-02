@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/targetNameInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/inputs"
+        android:fontFamily="@font/vazirfdwol"
+        android:hint="عنوان هدف"
+        android:padding="8dp"
+        android:textColor="@color/black" />
+
+    <EditText
+        android:id="@+id/targetDesInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/inputs"
+        android:fontFamily="@font/vazirfdwol"
+        android:hint="توضیحات"
+        android:inputType="textMultiLine"
+        android:padding="8dp"
+        android:textColor="@color/black" />
+
+
+</LinearLayout>

@@ -46,4 +46,27 @@ class ActivityListFragment : Fragment() {
             activities?.let { adapter.setActivities(it) }
         }
     }
+//    private fun showEditDialog(activity: ActivityEntity) {
+//        val dialogView = layoutInflater.inflate(R.layout.layout_dialog_edit_activity, null)
+//        val etActivityName = dialogView.findViewById<EditText>(R.id.activityNameInput)
+//        val etActivityDescription = dialogView.findViewById<EditText>(R.id.activityDesInput)
+//
+//        etActivityName.setText(activity.aName)
+//        etActivityDescription.setText(activity.aDescription)
+//
+//        MaterialAlertDialogBuilder(requireContext())
+//            .setTitle("ویرایش فعالیت")
+//            .setView(dialogView)
+//            .setNegativeButton("Cancel") { dialog, _ ->
+//                dialog.dismiss()
+//            }
+//            .setPositiveButton("Update") { dialog, _ ->
+//                target.tName = etTargetName.text.toString()
+//                target.tDesc = etTargetDescription.text.toString()
+//
+//                activityViewModel.update(target)
+//                sortAndNotifyAdapter() // مرتب‌سازی پس از به‌روزرسانی داده‌ها
+//            }
+//            .show()
+//    }
 }

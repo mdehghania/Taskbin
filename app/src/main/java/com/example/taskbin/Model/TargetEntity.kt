@@ -15,8 +15,8 @@ import androidx.room.PrimaryKey
 )
 data class TargetEntity(
     @PrimaryKey(autoGenerate = true) val targetId: Int = 0,
-    val tName: String,
-    val tDesc: String,
+    var tName: String,
+    var tDesc: String,
     val userOwnerId: Int,
     var completed: Boolean,
     val timestamp: Long
