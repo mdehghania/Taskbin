@@ -1,14 +1,290 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Fragment.AddProjectFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@color/white"
+        android:scrollIndicators="right"
+        android:scrollbarStyle="insideInset"
+        tools:context=".Fragment.AddActivityFragment">
 
-</FrameLayout>
+        <!-- TODO: Update blank fragment layout -->
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview1AddActivity"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/btnBackAddActivity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="80dp"
+                    android:background="#00FFFFFF"
+                    android:src="@drawable/back_right"
+                    android:text="cardview"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/AddActivity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="130dp"
+                    android:fontFamily="@font/vazirfdwol"
+                    android:text="اضافه کردن"
+                    android:textSize="28dp">
+
+                </TextView>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView2AddActivity"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="10dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardview1AddActivity">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/projectName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/vazirfdwol"
+                    android:layout_marginTop="5dp"
+                    android:text="عنوان پروژه"
+                    android:textColor="@color/black"
+                    android:textSize="22dp"
+                    android:textStyle="bold">
+                </TextView>
+                <EditText
+                    android:id="@+id/projectNameInput"
+                    android:layout_width="380dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/projectName"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/inputs"
+                    android:inputType="text"
+                    android:textColor="#000000"
+                    android:textDirection="rtl"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/projectName"
+                    android:fontFamily="@font/vazirfdwol"
+                    android:padding="5dp"/>
+                <TextView
+                    android:id="@+id/projectStages"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/projectNameInput"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/vazirfdwol"
+                    android:text="مراحل پروژه"
+                    android:textColor="@color/black"
+                    android:textSize="22dp"
+                    android:textStyle="bold">
+                </TextView>
+                <EditText
+                    android:id="@+id/projectStagesInput1"
+                    android:layout_width="230dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/projectStages"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/inputs"
+                    android:inputType="text"
+                    android:layoutDirection="rtl"
+                    android:textColor="#000000"
+                    android:textDirection="rtl"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/projectStages"
+                    android:fontFamily="@font/vazirfdwol"
+                    android:padding="5dp"/>
+
+                <ImageButton
+                    android:id="@+id/addStages1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/projectStages"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toStartOf="@+id/projectStagesInput1"
+                    android:background="@drawable/stages"
+                    android:button="@null" />
+
+                <EditText
+                    android:id="@+id/projectStagesInput2"
+                    android:layout_width="230dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/projectStagesInput1"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/inputs"
+                    android:inputType="text"
+                    android:layoutDirection="rtl"
+                    android:textColor="#000000"
+                    android:textDirection="rtl"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/projectStagesInput1"
+                    android:fontFamily="@font/vazirfdwol"
+                    android:padding="5dp"/>
+
+                <ImageButton
+                    android:id="@+id/addStages2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/projectStagesInput1"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toStartOf="@+id/projectStagesInput2"
+                    android:background="@drawable/stages"
+                    android:button="@null" />
+                <EditText
+                    android:id="@+id/projectStagesInput3"
+                    android:layout_width="230dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/projectStagesInput2"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/inputs"
+                    android:inputType="text"
+                    android:layoutDirection="rtl"
+                    android:textColor="#000000"
+                    android:textDirection="rtl"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/projectStagesInput2"
+                    android:fontFamily="@font/vazirfdwol"
+                    android:padding="5dp"/>
+
+                <ImageButton
+                    android:id="@+id/addStages3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/projectStagesInput2"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toStartOf="@+id/projectStagesInput3"
+                    android:background="@drawable/stages"
+                    android:button="@null" />
+
+                <EditText
+                    android:id="@+id/projectStagesInput4"
+                    android:layout_width="230dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/projectStagesInput3"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/inputs"
+                    android:inputType="text"
+                    android:layoutDirection="rtl"
+                    android:textColor="#000000"
+                    android:textDirection="rtl"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/projectStagesInput3"
+                    android:fontFamily="@font/vazirfdwol"
+                    android:padding="5dp"/>
+
+                <ImageButton
+                    android:id="@+id/addStages4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/projectStagesInput3"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toStartOf="@+id/projectStagesInput4"
+                    android:background="@drawable/add_stages"
+                    android:button="@null" />
+
+                <TextView
+                    android:id="@+id/projectTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/projectStagesInput4"
+                    android:layout_marginTop="25dp"
+                    android:fontFamily="@font/vazirfdwol"
+                    android:text="زمان مورد نیاز"
+                    android:textColor="@color/black"
+                    android:textSize="22dp"
+                    android:textStyle="bold">
+                </TextView>
+
+
+                <EditText
+                    android:id="@+id/projectHoureInput"
+                    android:layout_width="230dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/projectTime"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/inputs"
+                    android:inputType="text"
+                    android:layoutDirection="rtl"
+                    android:textColor="#000000"
+                    android:textDirection="rtl"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/projectTime"
+                    android:fontFamily="@font/vazirfdwol"
+                    android:padding="5dp"/>
+
+                <CheckBox
+                    android:id="@+id/projectPin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/projectTime"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toStartOf="@+id/projectHoureInput"
+                    android:background="@drawable/radio_pin"
+                    android:button="@null" />
+
+                <Button
+                    android:id="@+id/btnSaveProject"
+                    android:layout_width="match_parent"
+                    android:layout_height="53dp"
+                    android:layout_below="@+id/projectHoureInput"
+                    android:layout_marginTop="40dp"
+                    android:backgroundTint="@color/orange"
+                    android:fontFamily="@font/vazirfdwol"
+                    android:text="ذخیره کردن"
+                    android:textColor="@color/white"
+                    app:cornerRadius="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.496"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

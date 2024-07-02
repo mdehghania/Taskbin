@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.taskbin.Model.ActivityEntity
 import com.example.taskbin.MyApplication
 import com.example.taskbin.R
 import com.example.taskbin.ViewModel.ActivityViewModel
@@ -46,7 +47,7 @@ class ActivityListFragment : Fragment() {
             activities?.let { adapter.setActivities(it) }
         }
     }
-//    private fun showEditDialog(activity: ActivityEntity) {
+    private fun showEditDialog(activity: ActivityEntity) {
 //        val dialogView = layoutInflater.inflate(R.layout.layout_dialog_edit_activity, null)
 //        val etActivityName = dialogView.findViewById<EditText>(R.id.activityNameInput)
 //        val etActivityDescription = dialogView.findViewById<EditText>(R.id.activityDesInput)
@@ -68,5 +69,5 @@ class ActivityListFragment : Fragment() {
 //                sortAndNotifyAdapter() // مرتب‌سازی پس از به‌روزرسانی داده‌ها
 //            }
 //            .show()
-//    }
+    }
 }

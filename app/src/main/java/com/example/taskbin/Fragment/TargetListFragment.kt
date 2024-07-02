@@ -48,7 +48,7 @@ class TargetListFragment : Fragment() {
             targetViewModel.updateCompletion(targetId, isChecked)
             sortAndNotifyAdapter()
         }, { target ->
-            if (!target.completed) {
+            if (target.completed) {
                 showEditDialog(target)
             }
         })
