@@ -44,11 +44,11 @@ class TargetListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         recyclerView = view.findViewById(R.id.recyclerViewTarget)
-        adapter = TargetAdapter(emptyList(), { targetId, isChecked ->
+        adapter = TargetAdapter(mutableListOf(), { targetId, isChecked ->
             targetViewModel.updateCompletion(targetId, isChecked)
             sortAndNotifyAdapter()
         }, { target ->
-            if (target.completed) {
+            if (!target.completed) { // فقط آیتم‌هایی که تکمیل نشده‌اند قابل ویرایش هستند
                 showEditDialog(target)
             }
         })
@@ -136,8 +136,6 @@ class TargetListFragment : Fragment() {
 // Apply the clip path to limit the drawing area
                     c.clipPath(path)
 
-
-
                     // Draw the background color
                     background.setBounds(
                         itemView.left, itemView.top,
@@ -165,7 +163,6 @@ class TargetListFragment : Fragment() {
                         isCurrentlyActive
                     )
                 }
-
 
                 override fun onSelectedChanged(
                     viewHolder: RecyclerView.ViewHolder?,

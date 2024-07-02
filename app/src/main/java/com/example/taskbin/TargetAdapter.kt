@@ -1,6 +1,5 @@
 package com.example.taskbin.View
 
-import PersianDateConverter
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
@@ -14,7 +13,7 @@ import com.example.taskbin.Model.TargetEntity
 import com.example.taskbin.R
 
 class TargetAdapter(
-    var targets: List<TargetEntity>,
+    var targets: MutableList<TargetEntity>,  // تغییر به MutableList
     private val onCheckboxClicked: (Int, Boolean) -> Unit,
     private val onItemLongClickListener: (TargetEntity) -> Unit
 ) : RecyclerView.Adapter<TargetAdapter.TargetViewHolder>() {
@@ -23,7 +22,6 @@ class TargetAdapter(
         private val cardView: CardView = itemView.findViewById(R.id.cardView)
         private val tvActivityName: TextView = itemView.findViewById(R.id.tvActivityName)
         private val cbActivity: CheckBox = itemView.findViewById(R.id.cbActivity)
-        private val showdate: TextView = itemView.findViewById(R.id.showdate)
 
         init {
             cbActivity.setOnCheckedChangeListener(null) // جلوگیری از تریگر ناخواسته در هنگام بایند کردن
@@ -36,7 +34,6 @@ class TargetAdapter(
                     cardView.alpha = if (isChecked) 0.5f else 1f
                 }
             }
-
 
             itemView.setOnLongClickListener {
                 val position = adapterPosition
@@ -65,10 +62,6 @@ class TargetAdapter(
             tvActivityName.text = target.tName
             cbActivity.isChecked = target.completed
             cardView.alpha = if (target.completed) 0.5f else 1f
-
-            // Convert and display date in Persian (Shamsi) format
-            val persianDate = PersianDateConverter.convertToPersianDate(target.timestamp)
-            showdate.text = persianDate
         }
 
         private fun animateScale(view: View, scale: Float) {
@@ -91,12 +84,12 @@ class TargetAdapter(
     }
 
     fun updateTargets(targets: List<TargetEntity>) {
-        this.targets = targets
+        this.targets = targets.toMutableList()  // تبدیل به MutableList
         notifyDataSetChanged()
     }
 
     fun updateTargetsWithHandler(targets: List<TargetEntity>) {
-        this.targets = targets
+        this.targets = targets.toMutableList()  // تبدیل به MutableList
         Handler(Looper.getMainLooper()).post {
             notifyDataSetChanged()
         }
@@ -107,7 +100,7 @@ class TargetAdapter(
     }
 
     fun removeTargetAtPosition(position: Int) {
-        (targets as MutableList).removeAt(position)
+        targets.removeAt(position)  // حذف آیتم
         notifyItemRemoved(position)
     }
 }

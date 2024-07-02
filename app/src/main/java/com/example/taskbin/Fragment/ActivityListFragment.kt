@@ -47,7 +47,7 @@ class ActivityListFragment : Fragment() {
             activities?.let { adapter.setActivities(it) }
         }
     }
-    private fun showEditDialog(activity: ActivityEntity) {
+    private fun showEditDialog1(activity: ActivityEntity) {
 //        val dialogView = layoutInflater.inflate(R.layout.layout_dialog_edit_activity, null)
 //        val etActivityName = dialogView.findViewById<EditText>(R.id.activityNameInput)
 //        val etActivityDescription = dialogView.findViewById<EditText>(R.id.activityDesInput)
