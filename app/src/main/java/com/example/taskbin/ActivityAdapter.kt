@@ -1,10 +1,12 @@
 package com.example.taskbin.View
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskbin.Model.ActivityEntity
@@ -14,9 +16,57 @@ class ActivityAdapter(private var activities: List<ActivityEntity>) :
     RecyclerView.Adapter<ActivityAdapter.ActivityViewHolder>() {
 
     class ActivityViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val activityName: TextView = itemView.findViewById(R.id.tvActivityName)
-        val activityCheckBox: CheckBox = itemView.findViewById(R.id.cbActivity)
-        val cardView: androidx.cardview.widget.CardView = itemView.findViewById(R.id.cardview2)
+        private val activityName: TextView = itemView.findViewById(R.id.tvActivityName)
+        private val activityCheckBox: CheckBox = itemView.findViewById(R.id.tvActivity)
+        private val cardView: CardView = itemView.findViewById(R.id.cardview2)
+
+        fun bind(activity: ActivityEntity, isChecked: Boolean, context: Context) {
+            activityName.text = activity.aName
+            activityCheckBox.isChecked = isChecked
+
+            // Set background color based on category
+            cardView.setCardBackgroundColor(
+                ContextCompat.getColor(context, getBackgroundColor(activity.aCategory))
+            )
+
+            // Set card view alpha based on checkbox state
+            if (isChecked) {
+                cardView.alpha = 0.5f // Disabled state
+            } else {
+                cardView.alpha = 1f // Default state
+            }
+
+            // Save checkbox state in SharedPreferences
+            activityCheckBox.setOnCheckedChangeListener(null) // Prevent unwanted triggering during binding
+            activityCheckBox.isChecked = isChecked
+            activityCheckBox.setOnCheckedChangeListener { _, isChecked ->
+                saveCheckBoxState(context, activity.activityId, isChecked)
+                cardView.alpha = if (isChecked) 0.5f else 1f
+            }
+        }
+
+        private fun getBackgroundColor(category: String): Int {
+            return when (category) {
+                "Lesson" -> R.color.light_yellow
+                "Health" -> R.color.light_green
+                "Fun" -> R.color.light_orange
+                "Job" -> R.color.light_blue
+                "Etc" -> R.color.etc
+                else -> R.color.black // Default color if needed
+            }
+        }
+
+        private fun saveCheckBoxState(context: Context, id: Int, isChecked: Boolean) {
+            val sharedPreferences = context.getSharedPreferences("CheckBoxPreferences", Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.putBoolean("checkbox_$id", isChecked)
+            editor.apply()
+        }
+
+        fun getCheckBoxState(context: Context, id: Int): Boolean {
+            val sharedPreferences = context.getSharedPreferences("CheckBoxPreferences", Context.MODE_PRIVATE)
+            return sharedPreferences.getBoolean("checkbox_$id", false)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivityViewHolder {
@@ -26,13 +76,8 @@ class ActivityAdapter(private var activities: List<ActivityEntity>) :
 
     override fun onBindViewHolder(holder: ActivityViewHolder, position: Int) {
         val currentActivity = activities[position]
-        holder.activityName.text = currentActivity.aName
-        holder.activityCheckBox.isChecked = currentActivity.aPin
-
-        // تنظیم رنگ پس‌زمینه
-        holder.cardView.setCardBackgroundColor(
-            ContextCompat.getColor(holder.itemView.context, getBackgroundColor(currentActivity.aCategory))
-        )
+        val isChecked = holder.getCheckBoxState(holder.itemView.context, currentActivity.activityId)
+        holder.bind(currentActivity, isChecked, holder.itemView.context)
     }
 
     override fun getItemCount(): Int {
@@ -42,17 +87,5 @@ class ActivityAdapter(private var activities: List<ActivityEntity>) :
     fun setActivities(activities: List<ActivityEntity>) {
         this.activities = activities
         notifyDataSetChanged()
-    }
-
-    // تابع کمکی برای تعیین رنگ پس‌زمینه
-    private fun getBackgroundColor(category: String): Int {
-        return when (category) {
-            "Lesson" -> R.color.light_yellow
-            "Health" -> R.color.light_green
-            "Fun" -> R.color.light_orange
-            "Job" -> R.color.light_blue
-            "Etc" -> R.color.etc
-            else -> R.color.black // رنگ پیش‌فرض در صورت نیاز
-        }
     }
 }

@@ -1,18 +1,56 @@
-package com.example.taskbin
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskbin.Model.TargetEntity
+import com.example.taskbin.R
 
-class TargetAdapter(private var targets: List<TargetEntity>) : RecyclerView.Adapter<TargetAdapter.TargetViewHolder>() {
+class TargetAdapter(
+    private var targets: List<TargetEntity>,
+    private val onCheckboxClicked: (Int, Boolean) -> Unit
+) : RecyclerView.Adapter<TargetAdapter.TargetViewHolder>() {
 
-    class TargetViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvActivityName: TextView = itemView.findViewById(R.id.tvActivityName)
-        val cbActivity: CheckBox = itemView.findViewById(R.id.cbActivity)
+    inner class TargetViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val cardView: CardView = itemView.findViewById(R.id.cardView)
+        private val tvActivityName: TextView = itemView.findViewById(R.id.tvActivityName)
+        private val cbActivity: CheckBox = itemView.findViewById(R.id.cbActivity)
+        private val showdate: TextView = itemView.findViewById(R.id.showdate)
+
+        init {
+            cbActivity.setOnCheckedChangeListener { _, isChecked ->
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val target = targets[position]
+                    onCheckboxClicked(target.targetId, isChecked)
+                }
+            }
+        }
+
+        fun bind(target: TargetEntity) {
+            tvActivityName.text = target.tName
+            cbActivity.isChecked = target.completed
+            if (target.completed) {
+                cardView.alpha = 0.5f // Example: Show disabled state with transparency
+            } else {
+                cardView.alpha = 1f // Return to default state
+            }
+
+            // Convert and display date in Persian (Shamsi) format
+            val persianDate = PersianDateConverter.convertToPersianDate(target.timestamp)
+            showdate.text = persianDate
+
+            cbActivity.setOnCheckedChangeListener(null) // Prevent unwanted triggering during binding
+            cbActivity.isChecked = target.completed
+            cbActivity.setOnCheckedChangeListener { _, isChecked ->
+                target.completed = isChecked
+                onCheckboxClicked(target.targetId, isChecked)
+                cardView.alpha = if (isChecked) 0.5f else 1f
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TargetViewHolder {
@@ -22,8 +60,7 @@ class TargetAdapter(private var targets: List<TargetEntity>) : RecyclerView.Adap
 
     override fun onBindViewHolder(holder: TargetViewHolder, position: Int) {
         val target = targets[position]
-        holder.tvActivityName.text = target.tName
-        holder.cbActivity.isChecked = target.completed  // Assuming 'completed' is a boolean in TargetEntity
+        holder.bind(target)
     }
 
     override fun getItemCount(): Int {

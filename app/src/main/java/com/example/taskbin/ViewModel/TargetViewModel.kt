@@ -24,4 +24,12 @@ class TargetViewModel(private val repository: TargetRepository) : ViewModel() {
     fun getTargetsByUserOwnerId(userOwnerId: Int): LiveData<List<TargetEntity>> {
         return repository.getTargetsByUser(userOwnerId)
     }
+    fun updateCompletion(targetId: Int, completed: Boolean) {
+        viewModelScope.launch {
+            repository.updateCompletion(
+                targetId,
+                completed
+            )  // تغییر اینجا از targetRepository به repository
+        }
+    }
 }

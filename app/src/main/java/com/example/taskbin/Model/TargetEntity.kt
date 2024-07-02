@@ -18,5 +18,6 @@ data class TargetEntity(
     val tName: String,
     val tDesc: String,
     val userOwnerId: Int,
-    val completed: Boolean
+    var completed: Boolean,
+    val timestamp: Long
 )

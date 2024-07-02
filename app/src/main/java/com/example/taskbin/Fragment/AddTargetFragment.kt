@@ -24,6 +24,7 @@ class AddTargetFragment : Fragment() {
     private lateinit var targetDesInput: EditText
     private var userOwnerId: Int = 0
 
+    // ViewModel for targets
     private val targetViewModel: TargetViewModel by viewModels {
         ViewModelFactory(
             (requireActivity().application as MyApplication).userRepository,
@@ -51,20 +52,19 @@ class AddTargetFragment : Fragment() {
         userOwnerId = sharedPreferences.getInt("userOwnerId", 0)
 
         btnBackAddTarget.setOnClickListener {
-            activity?.onBackPressed() // بازگشت به فرگمنت قبلی
+            activity?.onBackPressed() // Back to previous fragment
         }
         btnSaveTarget.setOnClickListener {
-            saveActivity()
-            activity?.onBackPressed()
+            saveTarget()
         }
     }
 
-    private fun saveActivity() {
+    private fun saveTarget() {
         val nameInput = targetNameInput.text.toString()
         val descriptionInput = targetDesInput.text.toString()
 
         if (nameInput.isEmpty()) {
-            Toast.makeText(requireContext(), "Please enter an activity name", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Please enter a target name", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -73,10 +73,19 @@ class AddTargetFragment : Fragment() {
             return
         }
 
+        // Create a new target entity
+        val timestamp = System.currentTimeMillis()
         val target = TargetEntity(
-            tName = nameInput, tDesc = descriptionInput, userOwnerId = userOwnerId, completed = false
+            tName = nameInput, tDesc = descriptionInput, userOwnerId = userOwnerId, completed = false, timestamp = timestamp
         )
+
+        // Insert the target into ViewModel
         targetViewModel.insert(target)
-        Toast.makeText(requireContext(), "Successful!", Toast.LENGTH_SHORT).show()
+
+        // Show a success message
+        Toast.makeText(requireContext(), "Target saved successfully!", Toast.LENGTH_SHORT).show()
+
+        // Navigate back to previous fragment
+        activity?.onBackPressed()
     }
 }

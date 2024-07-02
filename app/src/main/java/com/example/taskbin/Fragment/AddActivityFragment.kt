@@ -68,43 +68,60 @@ class AddActivityFragment : Fragment() {
         radioButtonFun = view.findViewById(R.id.radioButtonFun)
         radioButtonJob = view.findViewById(R.id.radioButtonJob)
         radioButtonEtc = view.findViewById(R.id.radioButtonEtc)
-        activityDesInput = view.findViewById(R.id.activityDesInput)
         activityTimeInput = view.findViewById(R.id.activityTimeInput)
         checkButtonPin = view.findViewById(R.id.checkButtonPin)
         activityHoureInput = view.findViewById(R.id.activityHoureInput)
+
         isCheckBoxPinChecked = checkButtonPin.isChecked
         checkButtonPin.setOnCheckedChangeListener { _, isChecked ->
             isCheckBoxPinChecked = isChecked
         }
+
         radioGroup.setOnCheckedChangeListener { _, checkedId ->
             updateSelectedRadioButtonText(checkedId)
         }
+
         activityTimeInput.setOnClickListener {
             showTimePickerDialog(activityTimeInput)
         }
+
         activityHoureInput.setOnClickListener {
             showTimePickerDialog(activityHoureInput)
         }
+
         btnBackAddActivity.setOnClickListener {
-            activity?.onBackPressed() // بازگشت به فرگمنت قبلی
+            onBackPressed()
         }
+
         btnSaveActivity.setOnClickListener {
-            saveActivity()
+            if (validateInput()) {
+                saveActivity()
+                activity?.onBackPressed()
+            } else {
+                Toast.makeText(requireContext(), "Please fill in all required fields", Toast.LENGTH_SHORT).show()
+            }
         }
-        // خواندن شناسه کاربر از SharedPreferences
+
+        // Read userOwnerId from SharedPreferences
         val sharedPreferences = requireActivity().getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
         userOwnerId = sharedPreferences.getInt("userOwnerId", 0)
-        // دریافت تاریخ انتخاب شده از آرگومان ها
+
+        // Get selected date from arguments
         selectedDate = arguments?.getSerializable("selectedDate") as? PersianCalendar ?: PersianCalendar()
+
+        btnBackAddActivity.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun updateSelectedRadioButtonText(checkedId: Int) {
-        when (checkedId) {
-            R.id.radioButtonLesson -> selectedRadioButtonText = "Lesson"
-            R.id.radioButtonHealth -> selectedRadioButtonText = "Health"
-            R.id.radioButtonFun -> selectedRadioButtonText = "Fun"
-            R.id.radioButtonJob -> selectedRadioButtonText = "Job"
-            R.id.radioButtonEtc -> selectedRadioButtonText = "Etc"
+        selectedRadioButtonText = when (checkedId) {
+            R.id.radioButtonLesson -> "Lesson"
+            R.id.radioButtonHealth -> "Health"
+            R.id.radioButtonFun -> "Fun"
+            R.id.radioButtonJob -> "Job"
+            R.id.radioButtonEtc -> "Etc"
+            else -> null
         }
     }
 
@@ -133,32 +150,43 @@ class AddActivityFragment : Fragment() {
         return builder.toString()
     }
 
+    private fun validateInput(): Boolean {
+        val nameInput = activityNameInput.text.toString().trim()
+        val selectedRadioButtonId = radioGroup.checkedRadioButtonId
+
+        return nameInput.isNotEmpty() && selectedRadioButtonId != -1
+    }
+
     private fun saveActivity() {
         val nameInput = activityNameInput.text.toString()
-        val category = selectedRadioButtonText ?: "" // استفاده از مقدار پیش‌فرض خالی
+        val category = selectedRadioButtonText ?: ""
         val descriptionInput = activityDesInput.text.toString()
         val timeInput = activityTimeInput.text.toString()
         val hourInput = activityHoureInput.text.toString()
         val pin = isCheckBoxPinChecked
 
-        if (nameInput.isEmpty()) {
-            Toast.makeText(requireContext(), "Please enter an activity name", Toast.LENGTH_SHORT).show()
-        } else if (category.isEmpty()) {
-            Toast.makeText(requireContext(), "Please select a category", Toast.LENGTH_SHORT).show()
+        val activity = ActivityEntity(
+            aName = nameInput,
+            aDescription = descriptionInput,
+            aCategory = category,
+            aTime = timeInput,
+            aHour = hourInput,
+            aPin = pin,
+            activityId = 0,
+            userOwnerId = userOwnerId,
+            aDate = selectedDate.timeInMillis,
+            completed = false
+        )
+
+        activityViewModel.insert(activity)
+        Toast.makeText(requireContext(), "Activity saved successfully", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun onBackPressed() {
+        if (!validateInput()) {
+            Toast.makeText(requireContext(), "Please fill in all required fields", Toast.LENGTH_SHORT).show()
         } else {
-            val activity = ActivityEntity(
-                aName = nameInput,
-                aDescription = descriptionInput,
-                aCategory = category,
-                aTime = timeInput,
-                aHour = hourInput,
-                aPin = pin,
-                activityId = 0,
-                userOwnerId = userOwnerId, // استفاده از شناسه کاربر از SharedPreferences
-                aDate = selectedDate.timeInMillis // اضافه کردن تاریخ انتخاب شده
-            )
-            activityViewModel.insert(activity)
-            Toast.makeText(requireContext(), "Activity saved successfully", Toast.LENGTH_SHORT).show()
+            activity?.onBackPressed()
         }
     }
 }

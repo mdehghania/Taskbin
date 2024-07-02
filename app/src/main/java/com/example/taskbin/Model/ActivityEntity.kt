@@ -22,5 +22,6 @@ data class ActivityEntity(
     val aHour: String,
     val aPin: Boolean,
     val aDate: Long ,
-    val userOwnerId: Int
+    val userOwnerId: Int,
+    val completed: Boolean
 )

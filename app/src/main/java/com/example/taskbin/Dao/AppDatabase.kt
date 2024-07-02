@@ -11,7 +11,7 @@ import com.example.taskbin.Model.ProjectEntity
 import com.example.taskbin.Model.TargetEntity
 import com.example.taskbin.Model.UserEntity
 
-@Database(entities = [UserEntity::class, ProjectEntity::class, TargetEntity::class, ActivityEntity::class], version = 3)
+@Database(entities = [UserEntity::class, ProjectEntity::class, TargetEntity::class, ActivityEntity::class], version = 5)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
@@ -47,13 +47,25 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE `activity_table` ADD COLUMN `completed` INTEGER NOT NULL DEFAULT 0")
+            }
+        }
+
+        private val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE `target_table` ADD COLUMN `timestamp` INTEGER NOT NULL DEFAULT 0")
+            }
+        }
+
         fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
                     "app_database"
-                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3).build()
+                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5).build()
                 INSTANCE = instance
                 instance
             }

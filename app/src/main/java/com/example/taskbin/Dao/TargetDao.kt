@@ -28,5 +28,7 @@ interface TargetDao {
     @Query("SELECT * FROM target_table")
     fun getAllTargets(): LiveData<List<TargetEntity>>
 
+    @Query("UPDATE target_table SET completed = :completed WHERE targetId = :targetId")
+    suspend fun updateCompletion(targetId: Int, completed: Boolean)
 
 }

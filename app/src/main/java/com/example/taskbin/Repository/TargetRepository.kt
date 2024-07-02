@@ -27,4 +27,8 @@ class TargetRepository(private val targetDao: TargetDao) {
         Log.d("TargetRepository", "Fetching targets for userId: $userId")
         return targetDao.getTargetsByUserOwnerId(userId)
     }
+
+    suspend fun updateCompletion(targetId: Int, completed: Boolean) {
+        targetDao.updateCompletion(targetId, completed)
+    }
 }

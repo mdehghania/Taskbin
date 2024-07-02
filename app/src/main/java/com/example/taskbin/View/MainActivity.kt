@@ -1,6 +1,5 @@
 package com.example.taskbin.View
 
-
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -15,7 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var bottomNavigationView: BottomNavigationView
-    private var currentFragmentId: Int = R.id.Home  // Default to HomeFragment
+    private var currentFragmentId: Int = R.id.Tropht
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

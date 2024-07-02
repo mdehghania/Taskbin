@@ -23,7 +23,7 @@
             android:layoutDirection="rtl"> <!-- اضافه شده برای جهت راست به چپ -->
 
             <CheckBox
-                android:id="@+id/cbActivity"
+                android:id="@+id/tvActivity"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:fontFamily="@font/vazirfdwol"
