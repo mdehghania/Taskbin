@@ -1,33 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#FFFFFF"
-    android:orientation="vertical"
-    android:padding="16dp">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="350dp"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.AddProjectFragment"
+    android:background="#00ff0000"
+    >
 
-    <EditText
-        android:id="@+id/targetNameInput"
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview1AddTarget"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/AddActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ویرایش کردن"
+                android:textSize="24dp"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/vazirfdwol"
+                android:textColor="@color/black">
+
+            </TextView>
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview2AddTarget"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/inputs"
-        android:fontFamily="@font/vazirfdwol"
-        android:hint="عنوان هدف"
-        android:padding="8dp"
-        android:textColor="@color/black" />
+        android:layout_marginTop="-20dp"
+        android:layout_marginStart="0dp"
+        app:cardCornerRadius="12dp"
+        android:layout_marginEnd="0dp"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardview1AddTarget">
 
-    <EditText
-        android:id="@+id/targetDesInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/inputs"
-        android:fontFamily="@font/vazirfdwol"
-        android:hint="توضیحات"
-        android:inputType="textMultiLine"
-        android:padding="8dp"
-        android:textColor="@color/black" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20dp">
+            <TextView
+                android:id="@+id/targetName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/vazirfdwol"
+                android:text="عنوان هدف"
+                android:textSize="22dp"
+                android:textColor="@color/black">
+
+            </TextView>
+
+            <EditText
+                android:id="@+id/targetNameInput"
+                android:layout_width="380dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/targetName"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/inputs"
+                android:inputType="text"
+                android:textColor="#000000"
+                android:textDirection="rtl"
+                android:padding="5dp"
+                android:fontFamily="@font/vazirfdwol"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/targetName" />
 
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/targetDes"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_below="@id/targetNameInput"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/vazirfdwol"
+                android:text="توضیحات"
+                android:textColor="@color/black"
+                android:textSize="22dp">
+
+            </TextView>
+            <MultiAutoCompleteTextView
+                android:id="@+id/targetDesInput"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@drawable/input_des_target"
+                android:layout_below="@id/targetDes"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/vazirfdwol"
+                android:padding="5dp"
+                android:textDirection="rtl"
+                >
+            </MultiAutoCompleteTextView>
+            <Button
+                android:id="@+id/btnSaveUpdateTarget"
+                android:layout_width="140dp"
+                android:layout_height="55dp"
+                android:layout_below="@+id/targetDesInput"
+                android:backgroundTint="@color/orange"
+                android:fontFamily="@font/vazirfdwol"
+                android:text="ذخیره "
+                android:textColor="@color/white"
+                android:layout_marginBottom="40dp"
+                app:cornerRadius="10dp"
+                android:layout_marginTop="40dp"
+                android:layout_alignParentRight="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+            <Button
+                android:id="@+id/btnCancleUpdateTarget"
+                android:layout_width="140dp"
+                android:layout_height="55dp"
+                android:layout_below="@+id/targetDesInput"
+                android:backgroundTint="@color/orange"
+                android:fontFamily="@font/vazirfdwol"
+                android:text="لغو"
+                android:textColor="@color/white"
+                app:cornerRadius="10dp"
+                android:layout_marginTop="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="40dp"
+                app:layout_constraintVertical_bias="0.0" />
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

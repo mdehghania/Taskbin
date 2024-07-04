@@ -25,4 +25,13 @@ class ActivityViewModel(private val repository: ActivityRepository) : ViewModel(
         repository.delete(activity)
     }
 
+    fun updateCompletion(activityId: Int, completed: Boolean) {
+        viewModelScope.launch {
+            repository.updateCompletion(
+                activityId,
+                completed
+            )  // تغییر اینجا از targetRepository به repository
+        }
+    }
+
 }

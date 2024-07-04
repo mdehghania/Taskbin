@@ -22,5 +22,7 @@ interface ActivityDao {
     @Query("SELECT * FROM activity_table WHERE userOwnerId = :userOwnerId")
     fun getActivitiesByUserOwnerId(userOwnerId: Int): LiveData<List<ActivityEntity>>
 
+    @Query("UPDATE activity_table SET completed = :completed WHERE activityId = :activityId")
+    suspend fun updateCompletion(activityId: Int, completed: Boolean)
 
 }

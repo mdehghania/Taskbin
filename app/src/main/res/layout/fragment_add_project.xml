@@ -3,8 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -19,7 +21,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardview1AddActivity"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="80dp"
             app:cardCornerRadius="2dp"
             app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -71,6 +73,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
                     android:id="@+id/projectName"
                     android:layout_width="match_parent"
@@ -82,6 +85,7 @@
                     android:textSize="22dp"
                     android:textStyle="bold">
                 </TextView>
+
                 <EditText
                     android:id="@+id/projectNameInput"
                     android:layout_width="380dp"
@@ -97,6 +101,7 @@
                     app:layout_constraintTop_toBottomOf="@id/projectName"
                     android:fontFamily="@font/vazirfdwol"
                     android:padding="5dp"/>
+
                 <TextView
                     android:id="@+id/projectStages"
                     android:layout_width="match_parent"
@@ -109,126 +114,66 @@
                     android:textSize="22dp"
                     android:textStyle="bold">
                 </TextView>
-                <EditText
-                    android:id="@+id/projectStagesInput1"
-                    android:layout_width="230dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/projectStages"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/inputs"
-                    android:inputType="text"
-                    android:layoutDirection="rtl"
-                    android:textColor="#000000"
-                    android:textDirection="rtl"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/projectStages"
-                    android:fontFamily="@font/vazirfdwol"
-                    android:padding="5dp"/>
 
-                <ImageButton
-                    android:id="@+id/addStages1"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/stagesContainer"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/projectStages"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_toStartOf="@+id/projectStagesInput1"
-                    android:background="@drawable/stages"
-                    android:button="@null" />
+                    android:orientation="vertical"
+                    android:layout_below="@id/projectStages"
+                    android:layout_marginTop="10dp">
 
-                <EditText
-                    android:id="@+id/projectStagesInput2"
-                    android:layout_width="230dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/projectStagesInput1"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/inputs"
-                    android:inputType="text"
-                    android:layoutDirection="rtl"
-                    android:textColor="#000000"
-                    android:textDirection="rtl"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/projectStagesInput1"
-                    android:fontFamily="@font/vazirfdwol"
-                    android:padding="5dp"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
 
-                <ImageButton
-                    android:id="@+id/addStages2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/projectStagesInput1"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_toStartOf="@+id/projectStagesInput2"
-                    android:background="@drawable/stages"
-                    android:button="@null" />
-                <EditText
-                    android:id="@+id/projectStagesInput3"
-                    android:layout_width="230dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/projectStagesInput2"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/inputs"
-                    android:inputType="text"
-                    android:layoutDirection="rtl"
-                    android:textColor="#000000"
-                    android:textDirection="rtl"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/projectStagesInput2"
-                    android:fontFamily="@font/vazirfdwol"
-                    android:padding="5dp"/>
+                        <EditText
+                            android:id="@+id/projectStagesInput1"
+                            android:layout_width="230dp"
+                            android:layout_height="50dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:background="@drawable/inputs"
+                            android:inputType="text"
+                            android:layoutDirection="rtl"
+                            android:textColor="#000000"
+                            android:textDirection="rtl"
+                            android:layout_marginTop="15dp"
+                            android:fontFamily="@font/vazirfdwol"
+                            android:padding="5dp"/>
 
-                <ImageButton
-                    android:id="@+id/addStages3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/projectStagesInput2"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_toStartOf="@+id/projectStagesInput3"
-                    android:background="@drawable/stages"
-                    android:button="@null" />
+                        <ImageButton
+                            android:id="@+id/addStages1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="15dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginBottom="-5dp"
+                            android:layout_toStartOf="@+id/projectStagesInput1"
+                            android:background="@drawable/stages"
+                            android:button="@null" />
+                    </RelativeLayout>
 
-                <EditText
-                    android:id="@+id/projectStagesInput4"
-                    android:layout_width="230dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/projectStagesInput3"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/inputs"
-                    android:inputType="text"
-                    android:layoutDirection="rtl"
-                    android:textColor="#000000"
-                    android:textDirection="rtl"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/projectStagesInput3"
-                    android:fontFamily="@font/vazirfdwol"
-                    android:padding="5dp"/>
+                    <!-- Add more RelativeLayout blocks for additional stages -->
+
+                </LinearLayout>
 
                 <ImageButton
                     android:id="@+id/addStages4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/projectStagesInput3"
-                    android:layout_marginRight="15dp"
+                    android:layout_below="@id/stagesContainer"
+                    android:layout_marginLeft="9dp"
                     android:layout_marginTop="10dp"
-                    android:layout_toStartOf="@+id/projectStagesInput4"
                     android:background="@drawable/add_stages"
                     android:button="@null" />
-
                 <TextView
                     android:id="@+id/projectTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/projectStagesInput4"
+                    android:layout_below="@id/addStages4"
                     android:layout_marginTop="25dp"
                     android:fontFamily="@font/vazirfdwol"
                     android:text="زمان مورد نیاز"
@@ -236,8 +181,6 @@
                     android:textSize="22dp"
                     android:textStyle="bold">
                 </TextView>
-
-
                 <EditText
                     android:id="@+id/projectHoureInput"
                     android:layout_width="230dp"
@@ -255,7 +198,6 @@
                     app:layout_constraintTop_toBottomOf="@id/projectTime"
                     android:fontFamily="@font/vazirfdwol"
                     android:padding="5dp"/>
-
                 <CheckBox
                     android:id="@+id/projectPin"
                     android:layout_width="wrap_content"

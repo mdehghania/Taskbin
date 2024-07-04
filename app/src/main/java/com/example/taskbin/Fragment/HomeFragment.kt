@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aminography.primecalendar.persian.PersianCalendar
@@ -17,11 +18,13 @@ import com.example.taskbin.DateAdapter
 import com.example.taskbin.R
 import com.example.taskbin.View.ActivityListFragment
 import com.example.taskbin.View.Profile
+import com.example.taskbin.ViewModel.SharedViewModel
 import com.example.taskbin.addDay
 import com.example.taskbin.setDayOfMonth
 
 class HomeFragment : Fragment() {
 
+    private val  sharedViewModel: SharedViewModel by  activityViewModels()
     private lateinit var adapter: DateAdapter
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var profileBtn: ImageView
@@ -47,7 +50,7 @@ class HomeFragment : Fragment() {
 
         adapter = DateAdapter(requireContext(), dates) { date ->
             selectedDate = date
-
+            updateActivityListFragment(date)
         }
         recyclerView.adapter = adapter
 
@@ -66,9 +69,7 @@ class HomeFragment : Fragment() {
 
         // اینجا اضافه کردن Fragment به FrameLayout
         if (savedInstanceState == null) {
-            childFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerView, ActivityListFragment())
-                .commit()
+            updateActivityListFragment(selectedDate)
         }
 
         return view
@@ -115,6 +116,7 @@ class HomeFragment : Fragment() {
     private fun selectToday() {
         val today = PersianCalendar()
         selectedDate = today
+        sharedViewModel.setSelectedDate(selectedDate)
         val todayIndex = dates.indexOfFirst { it.isSameDay(today) }
         adapter.selectedPosition = todayIndex
         adapter.notifyDataSetChanged()
@@ -124,6 +126,18 @@ class HomeFragment : Fragment() {
         val today = PersianCalendar()
         val todayIndex = dates.indexOfFirst { it.isSameDay(today) }
         layoutManager.scrollToPosition(todayIndex)
+    }
+
+    private fun updateActivityListFragment(date: PersianCalendar) {
+        sharedViewModel.setSelectedDate(date)
+        val fragment = ActivityListFragment()
+        val bundle = Bundle()
+        bundle.putLong("selectedDate", date.timeInMillis)
+        fragment.arguments = bundle
+
+        childFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainerView, fragment)
+            .commit()
     }
 
     fun getSelectedDate(): PersianCalendar {

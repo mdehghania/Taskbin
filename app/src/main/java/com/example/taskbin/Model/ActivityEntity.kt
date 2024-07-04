@@ -15,13 +15,13 @@ import androidx.room.PrimaryKey
 )
 data class ActivityEntity(
     @PrimaryKey(autoGenerate = true) val activityId: Int = 0,
-    val aName: String,
-    val aDescription: String,
-    val aCategory: String,
-    val aTime: String,
-    val aHour: String,
-    val aPin: Boolean,
-    val aDate: Long ,
-    val userOwnerId: Int,
-    val completed: Boolean
+    var aName: String,
+    var aDescription: String,
+    var aCategory: String,
+    var aTime: String,
+    var aHour: String,
+    var aPin: Boolean,
+    var aDate: Long ,
+    var userOwnerId: Int,
+    var completed: Boolean
 )

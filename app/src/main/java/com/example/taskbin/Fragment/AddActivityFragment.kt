@@ -14,16 +14,19 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.aminography.primecalendar.persian.PersianCalendar
 import com.example.taskbin.Model.ActivityEntity
 import com.example.taskbin.MyApplication
 import com.example.taskbin.R
 import com.example.taskbin.ViewModel.ActivityViewModel
+import com.example.taskbin.ViewModel.SharedViewModel
 import com.example.taskbin.ViewModel.ViewModelFactory
 import java.util.Calendar
 
 class AddActivityFragment : Fragment() {
+    private  val  sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var btnBackAddActivity: ImageView
     private lateinit var btnSaveActivity: Button
     private lateinit var activityNameInput: EditText
@@ -90,7 +93,16 @@ class AddActivityFragment : Fragment() {
         }
 
         btnBackAddActivity.setOnClickListener {
-            onBackPressed()
+            activity?.onBackPressed()
+        }
+
+        // خواندن selectedDate از SharedPreferences
+        val sharedPreferences1 = requireContext().getSharedPreferences("SelectedDatePrefs", Context.MODE_PRIVATE)
+        val selectedDateMillis = sharedPreferences1.getLong("selectedDate", PersianCalendar().timeInMillis)
+        selectedDate = PersianCalendar().apply { timeInMillis = selectedDateMillis }
+
+        sharedViewModel.selectedDate.observe(viewLifecycleOwner) { date ->
+            selectedDate = date
         }
 
         btnSaveActivity.setOnClickListener {
@@ -110,7 +122,7 @@ class AddActivityFragment : Fragment() {
         selectedDate = arguments?.getSerializable("selectedDate") as? PersianCalendar ?: PersianCalendar()
 
         btnBackAddActivity.setOnClickListener {
-            onBackPressed()
+            activity?.onBackPressed()
         }
     }
 
@@ -182,11 +194,12 @@ class AddActivityFragment : Fragment() {
         Toast.makeText(requireContext(), "Activity saved successfully", Toast.LENGTH_SHORT).show()
     }
 
-    private fun onBackPressed() {
-        if (!validateInput()) {
-            Toast.makeText(requireContext(), "Please fill in all required fields", Toast.LENGTH_SHORT).show()
-        } else {
-            activity?.onBackPressed()
-        }
-    }
+
+//    private fun onBackPressed() {
+//        if (!validateInput()) {
+//            Toast.makeText(requireContext(), "Please fill in all required fields", Toast.LENGTH_SHORT).show()
+//        } else {
+//            activity?.onBackPressed()
+//        }
+//    }
 }

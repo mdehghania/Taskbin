@@ -21,4 +21,7 @@ class ActivityRepository(private val activityDao: ActivityDao) {
     suspend fun delete(activity: ActivityEntity) {
         activityDao.delete(activity)
     }
+    suspend fun updateCompletion(activityId: Int, completed: Boolean) {
+        activityDao.updateCompletion(activityId, completed)
+    }
 }

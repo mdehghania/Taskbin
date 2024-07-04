@@ -1,13 +1,16 @@
 package com.example.taskbin.View
 
 import SpaceItemDecoration
+import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -195,23 +198,42 @@ class TargetListFragment : Fragment() {
         val dialogView = layoutInflater.inflate(R.layout.layout_dialog_edit_target, null)
         val etTargetName = dialogView.findViewById<EditText>(R.id.targetNameInput)
         val etTargetDescription = dialogView.findViewById<EditText>(R.id.targetDesInput)
+        val btnSaveUpdateTarget = dialogView.findViewById<Button>(R.id.btnSaveUpdateTarget)
+        val btnCancleUpdateTarget = dialogView.findViewById<Button>(R.id.btnCancleUpdateTarget)
 
         etTargetName.setText(target.tName)
         etTargetDescription.setText(target.tDesc)
 
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle("ویرایش هدف")
+        val dialogBuilder = AlertDialog.Builder(requireContext())
             .setView(dialogView)
-            .setNegativeButton("Cancel") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .setPositiveButton("Update") { dialog, _ ->
-                target.tName = etTargetName.text.toString()
-                target.tDesc = etTargetDescription.text.toString()
+            .create()
 
-                targetViewModel.update(target)
-                sortAndNotifyAdapter() // مرتب‌سازی پس از به‌روزرسانی داده‌ها
-            }
-            .show()
+        dialogBuilder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        btnSaveUpdateTarget.setOnClickListener {
+            target.tName = etTargetName.text.toString()
+            target.tDesc = etTargetDescription.text.toString()
+
+            targetViewModel.update(target)
+            sortAndNotifyAdapter() // مرتب‌سازی پس از به‌روزرسانی داده‌ها
+            dialogBuilder.dismiss()
+        }
+
+        btnCancleUpdateTarget.setOnClickListener {
+            dialogBuilder.dismiss()
+        }
+
+        // تنظیم عرض دیالوگ
+        dialogBuilder.setOnShowListener {
+            val window = dialogBuilder.window
+            window?.setLayout(350.dpToPx(requireContext()), ViewGroup.LayoutParams.WRAP_CONTENT)
+        }
+
+        dialogBuilder.show()
+    }
+
+    // تابع الحاقی برای تبدیل dp به پیکسل
+    fun Int.dpToPx(context: Context): Int {
+        return (this * context.resources.displayMetrics.density).toInt()
     }
 }

@@ -24,6 +24,11 @@ class ViewModelFactory(
             @Suppress("UNCHECKED_CAST")
             return TargetViewModel(targetRepository) as T
         }
+        if (modelClass.isAssignableFrom(SharedViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return SharedViewModel() as T
+        }
+
         throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

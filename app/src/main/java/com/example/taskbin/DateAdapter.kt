@@ -50,7 +50,8 @@ class DateAdapter(
             notifyItemChanged(previousPosition)
             notifyItemChanged(position)
 
-            onDateSelected(date) // فراخوانی تابع برای تاریخ انتخاب شده
+            onDateSelected(date)
+            saveSelectedDateToPreferences(date) // اضافه کردن این خط
         }
     }
 
@@ -70,4 +71,13 @@ class DateAdapter(
             tvDayOfWeek.text = dayOfWeek
         }
     }
+
+    private fun saveSelectedDateToPreferences(date: PersianCalendar) {
+        val sharedPreferences = context.getSharedPreferences("SelectedDatePrefs", Context.MODE_PRIVATE)
+        with(sharedPreferences.edit()) {
+            putLong("selectedDate", date.timeInMillis)
+            apply()
+        }
+    }
 }
+

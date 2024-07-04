@@ -1,3 +1,4 @@
+
 package com.example.taskbin.View
 
 import android.content.Context
@@ -12,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.taskbin.Model.ActivityEntity
 import com.example.taskbin.R
 
-class ActivityAdapter(private var activities: List<ActivityEntity>) :
+class ActivityAdapter(var activities: List<ActivityEntity>) :
     RecyclerView.Adapter<ActivityAdapter.ActivityViewHolder>() {
 
     class ActivityViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -84,8 +85,8 @@ class ActivityAdapter(private var activities: List<ActivityEntity>) :
         return activities.size
     }
 
-    fun setActivities(activities: List<ActivityEntity>) {
-        this.activities = activities
+    fun updateActivities(newActivities: List<ActivityEntity>) {
+        this.activities = newActivities
         notifyDataSetChanged()
     }
 }
