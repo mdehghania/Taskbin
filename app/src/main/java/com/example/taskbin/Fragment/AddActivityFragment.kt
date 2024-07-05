@@ -26,7 +26,7 @@ import com.example.taskbin.ViewModel.ViewModelFactory
 import java.util.Calendar
 
 class AddActivityFragment : Fragment() {
-    private  val  sharedViewModel: SharedViewModel by activityViewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var btnBackAddActivity: ImageView
     private lateinit var btnSaveActivity: Button
     private lateinit var activityNameInput: EditText
@@ -108,6 +108,8 @@ class AddActivityFragment : Fragment() {
         btnSaveActivity.setOnClickListener {
             if (validateInput()) {
                 saveActivity()
+                // تنظیم selectedDate در SharedViewModel پس از ذخیره فعالیت
+                sharedViewModel.setSelectedDate(selectedDate)
                 activity?.onBackPressed()
             } else {
                 Toast.makeText(requireContext(), "Please fill in all required fields", Toast.LENGTH_SHORT).show()
@@ -177,6 +179,7 @@ class AddActivityFragment : Fragment() {
         val hourInput = activityHoureInput.text.toString()
         val pin = isCheckBoxPinChecked
 
+        sharedViewModel.setSelectedDate(selectedDate)
         val activity = ActivityEntity(
             aName = nameInput,
             aDescription = descriptionInput,
@@ -192,14 +195,10 @@ class AddActivityFragment : Fragment() {
 
         activityViewModel.insert(activity)
         Toast.makeText(requireContext(), "Activity saved successfully", Toast.LENGTH_SHORT).show()
+
+        sharedViewModel.setSelectedDate(selectedDate)
+
+        // بازگشت به فرگمنت قبلی
+        parentFragmentManager.popBackStack()
     }
-
-
-//    private fun onBackPressed() {
-//        if (!validateInput()) {
-//            Toast.makeText(requireContext(), "Please fill in all required fields", Toast.LENGTH_SHORT).show()
-//        } else {
-//            activity?.onBackPressed()
-//        }
-//    }
 }

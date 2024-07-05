@@ -72,7 +72,6 @@ class Profile : AppCompatActivity() {
                 .setView(dialogView)
                 .create()
 
-            // Set background of the dialog to transparent to ensure rounded corners
             dialogBuilder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
             dialogPositiveButton.setOnClickListener {
@@ -95,14 +94,12 @@ class Profile : AppCompatActivity() {
             dialogBuilder.show()
         }
 
-        // تنظیم کلیک برای دکمه بازگشت
         btnBackP.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
-        // تنظیم کلیک برای دکمه خروج
         btnLogout.setOnClickListener {
             val intent = Intent(this, Welcome::class.java)
             startActivity(intent)
@@ -118,14 +115,12 @@ class Profile : AppCompatActivity() {
                     userPhone = if (newPhone.isNotBlank()) newPhone else it.userPhone,
                     username = if (newUserName.isNotBlank()) newUserName else it.username
                 )
-                userViewModel.insert(updatedUser)
+                userViewModel.updateUser(updatedUser)
 
-                // افزودن Toast داخل فراخوانی viewModel برای اطمینان از آپدیت شدن داده‌ها
                 runOnUiThread {
                     Toast.makeText(this, "اطلاعات با موفقیت به‌روزرسانی شد", Toast.LENGTH_SHORT).show()
                 }
 
-                // به‌روزرسانی SharedPreferences برای نام کاربری جدید
                 if (newUserName.isNotBlank()) {
                     val sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE)
                     with(sharedPreferences.edit()) {
@@ -133,9 +128,15 @@ class Profile : AppCompatActivity() {
                         apply()
                     }
 
-                    // به‌روزرسانی مستقیم TextView
                     runOnUiThread {
                         userNameTextView.text = newUserName
+                    }
+
+                    // بازیابی و نمایش نام کاربری جدید از ViewModel
+                    userViewModel.getUserByUsername(newUserName) { user ->
+                        user?.let {
+                            userNameTextView.text = it.username
+                        }
                     }
                 }
             } ?: runOnUiThread {

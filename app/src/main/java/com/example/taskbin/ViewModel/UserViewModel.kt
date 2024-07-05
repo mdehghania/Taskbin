@@ -17,6 +17,18 @@ class UserViewModel(private val repository: UserRepository) : ViewModel() {
         repository.insert(user)
     }
 
+    fun updateUser(user: UserEntity) = viewModelScope.launch {
+        repository.updateUser(user)
+    }
+
+    fun updateUsername(userId: Int, newUsername: String) = viewModelScope.launch {
+        repository.updateUsername(userId, newUsername)
+    }
+
+    fun updatePassword(userId: Int, newPassword: String) = viewModelScope.launch {
+        repository.updatePassword(userId, newPassword)
+    }
+
     fun getUser(username: String, password: String, callback: (UserEntity?) -> Unit) = viewModelScope.launch {
         val user = repository.getUser(username, password)
         callback(user)

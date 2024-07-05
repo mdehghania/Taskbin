@@ -1,6 +1,5 @@
 package com.example.taskbin.View
 
-
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -21,7 +20,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Initialize bottomNavigationView
         bottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
@@ -48,10 +46,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Show HomeFragment by default
         replaceFragment(TrapgyFragment())
 
-        // Register FragmentLifecycleCallbacks
         supportFragmentManager.registerFragmentLifecycleCallbacks(object : FragmentManager.FragmentLifecycleCallbacks() {
             override fun onFragmentResumed(fm: FragmentManager, f: Fragment) {
                 super.onFragmentResumed(fm, f)

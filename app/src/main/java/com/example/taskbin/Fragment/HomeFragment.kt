@@ -17,6 +17,7 @@ import com.aminography.primecalendar.persian.PersianCalendar
 import com.example.taskbin.DateAdapter
 import com.example.taskbin.R
 import com.example.taskbin.View.ActivityListFragment
+import com.example.taskbin.View.AddActivityFragment
 import com.example.taskbin.View.Profile
 import com.example.taskbin.ViewModel.SharedViewModel
 import com.example.taskbin.addDay
@@ -24,12 +25,13 @@ import com.example.taskbin.setDayOfMonth
 
 class HomeFragment : Fragment() {
 
-    private val  sharedViewModel: SharedViewModel by  activityViewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var adapter: DateAdapter
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var profileBtn: ImageView
     private val dates = mutableListOf<PersianCalendar>()
     private lateinit var selectedDate: PersianCalendar
+    private lateinit var calendarRecyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,6 +79,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        calendarRecyclerView = view.findViewById(R.id.recyclerView)
 
         profileBtn = view.findViewById(R.id.profileBtn)
 
@@ -84,6 +87,12 @@ class HomeFragment : Fragment() {
             val intent = Intent(requireContext(), Profile::class.java)
             startActivity(intent)
             activity?.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+        }
+
+        sharedViewModel.selectedDate.observe(viewLifecycleOwner) { date ->
+            selectedDate = date
+            selectDate(date)
+            scrollToSelectedDate()
         }
     }
 
@@ -123,9 +132,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun scrollToSelectedDate() {
-        val today = PersianCalendar()
-        val todayIndex = dates.indexOfFirst { it.isSameDay(today) }
-        layoutManager.scrollToPosition(todayIndex)
+        val dateIndex = dates.indexOfFirst { it.isSameDay(selectedDate) }
+        if (dateIndex != -1) {
+            layoutManager.scrollToPosition(dateIndex)
+        }
     }
 
     private fun updateActivityListFragment(date: PersianCalendar) {
@@ -140,6 +150,18 @@ class HomeFragment : Fragment() {
             .commit()
     }
 
+    private fun startAddActivityFragment() {
+        val fragment = AddActivityFragment()
+        val bundle = Bundle()
+        bundle.putLong("selectedDate", selectedDate.timeInMillis)
+        fragment.arguments = bundle
+
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainerView, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
     fun getSelectedDate(): PersianCalendar {
         return selectedDate
     }
@@ -150,19 +172,28 @@ class HomeFragment : Fragment() {
 
     private fun getPersianMonthName(month: Int): String {
         return when (month) {
-            1 -> "فروردین"
-            2 -> "اردیبهشت"
-            3 -> "خرداد"
-            4 -> "تیر"
-            5 -> "مرداد"
-            6 -> "شهریور"
-            7 -> "مهر"
-            8 -> "آبان"
-            9 -> "آذر"
-            10 -> "دی"
-            11 -> "بهمن"
-            12 -> "اسفند"
+            0 -> "فروردین"
+            1 -> "اردیبهشت"
+            2 -> "خرداد"
+            3 -> "تیر"
+            4 -> "مرداد"
+            5 -> "شهریور"
+            6 -> "مهر"
+            7 -> "آبان"
+            8 -> "آذر"
+            9 -> "دی"
+            10 -> "بهمن"
+            11 -> "اسفند"
             else -> ""
         }
     }
+
+    private fun selectDate(date: PersianCalendar) {
+        val dateIndex = dates.indexOfFirst { it.isSameDay(date) }
+        if (dateIndex != -1) {
+            adapter.selectedPosition = dateIndex
+            adapter.notifyDataSetChanged()
+        }
+    }
+
 }

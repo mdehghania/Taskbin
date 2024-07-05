@@ -14,6 +14,18 @@ class UserRepository(private val userDao: UserDao) {
         }
     }
 
+    suspend fun updateUser(user: UserEntity) {
+        userDao.update(user)
+    }
+
+    suspend fun updateUsername(userId: Int, newUsername: String) {
+        userDao.updateUsername(userId, newUsername)
+    }
+
+    suspend fun updatePassword(userId: Int, newPassword: String) {
+        userDao.updatePassword(userId, newPassword)
+    }
+
     suspend fun getUser(username: String, password: String): UserEntity? {
         return userDao.getUser(username, password)
     }

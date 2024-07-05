@@ -7,10 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.aminography.primecalendar.persian.PersianCalendar
 import com.example.taskbin.Model.TargetEntity
 import com.example.taskbin.R
+import java.util.Locale
 
 class TargetAdapter(
     var targets: MutableList<TargetEntity>,  // تغییر به MutableList
@@ -18,10 +21,13 @@ class TargetAdapter(
     private val onItemLongClickListener: (TargetEntity) -> Unit
 ) : RecyclerView.Adapter<TargetAdapter.TargetViewHolder>() {
 
+    private var isBinding: Boolean = false
+
     inner class TargetViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val cardView: CardView = itemView.findViewById(R.id.cardView)
         private val tvActivityName: TextView = itemView.findViewById(R.id.tvActivityName)
         private val cbActivity: CheckBox = itemView.findViewById(R.id.cbActivity)
+        private val tvShowDate: TextView = itemView.findViewById(R.id.showdate) // اضافه کردن TextView
 
         init {
             cbActivity.setOnCheckedChangeListener(null) // جلوگیری از تریگر ناخواسته در هنگام بایند کردن
@@ -32,6 +38,9 @@ class TargetAdapter(
                     target.completed = isChecked
                     onCheckboxClicked(target.targetId, isChecked)
                     cardView.alpha = if (isChecked) 0.5f else 1f
+                    if (!isBinding && isChecked) {
+                        Toast.makeText(itemView.context, "هورا موفق شدی!", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
 
@@ -59,9 +68,23 @@ class TargetAdapter(
         }
 
         fun bind(target: TargetEntity) {
+            isBinding = true
             tvActivityName.text = target.tName
             cbActivity.isChecked = target.completed
             cardView.alpha = if (target.completed) 0.5f else 1f
+            // فرمت و نمایش تاریخ به شمسی
+            val persianCalendar = PersianCalendar().apply {
+                timeInMillis = target.timestamp
+            }
+            val formattedDate = String.format(
+                Locale.getDefault(),
+                "%04d/%02d/%02d",
+                persianCalendar.year,
+                persianCalendar.month + 1,
+                persianCalendar.dayOfMonth
+            )
+            tvShowDate.text = formattedDate
+            isBinding = false
         }
 
         private fun animateScale(view: View, scale: Float) {

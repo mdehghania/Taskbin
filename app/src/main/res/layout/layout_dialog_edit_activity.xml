@@ -15,7 +15,7 @@
         app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardview1AddActivity">
+        tools:ignore="MissingConstraints">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -195,6 +195,40 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/activityTime" />
+        <Button
+            android:id="@+id/btnSaveUpdateTarget"
+            android:layout_width="140dp"
+            android:layout_height="55dp"
+            android:layout_below="@+id/activityRememberHoure"
+            android:backgroundTint="@color/orange"
+            android:fontFamily="@font/vazirfdwol"
+            android:text="ذخیره "
+            android:textColor="@color/white"
+            android:layout_marginBottom="40dp"
+            app:cornerRadius="10dp"
+            android:layout_marginTop="50dp"
+            android:layout_alignParentRight="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+        <Button
+            android:id="@+id/btnCancleUpdateTarget"
+            android:layout_width="140dp"
+            android:layout_height="55dp"
+            android:layout_below="@+id/activityHoureInput"
+            android:backgroundTint="@color/orange"
+            android:fontFamily="@font/vazirfdwol"
+            android:text="لغو"
+            android:textColor="@color/white"
+            app:cornerRadius="10dp"
+            android:layout_marginTop="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="40dp"
+            app:layout_constraintVertical_bias="0.0" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
 

@@ -30,7 +30,7 @@ class ActivityViewModel(private val repository: ActivityRepository) : ViewModel(
             repository.updateCompletion(
                 activityId,
                 completed
-            )  // تغییر اینجا از targetRepository به repository
+            )
         }
     }
 

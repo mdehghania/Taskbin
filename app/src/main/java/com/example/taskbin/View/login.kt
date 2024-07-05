@@ -29,14 +29,13 @@ class login : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)  // مطمئن شوید که نام فایل XML صحیح است
+        setContentView(R.layout.activity_login)
 
-        userNameEditText = findViewById(R.id.edittext)  // مطمئن شوید که شناسه صحیح است
-        userPassEditText = findViewById(R.id.editTextText)  // مطمئن شوید که شناسه صحیح است
-        btnNextLogin = findViewById(R.id.btnNextLogin)  // مطمئن شوید که شناسه صحیح است
-        btnFingerprintLogin = findViewById(R.id.btnFingerprintLogin)  // مطمئن شوید که شناسه صحیح است
+        userNameEditText = findViewById(R.id.edittext)
+        userPassEditText = findViewById(R.id.editTextText)
+        btnNextLogin = findViewById(R.id.btnNextLogin)
+        btnFingerprintLogin = findViewById(R.id.btnFingerprintLogin)
 
-        // Load saved username if available
         val sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE)
         val savedUsername = sharedPreferences.getString("username", "")
         userNameEditText.setText(savedUsername)
@@ -55,7 +54,6 @@ class login : AppCompatActivity() {
                 if (userName.isNotEmpty()) {
                     userViewModel.getUserByUsername(userName) { user ->
                         if (user != null) {
-                            // ذخیره userId در SharedPreferences
                             val editor = sharedPreferences.edit()
                             editor.putString("username", userName)
                             editor.putInt("userOwnerId", user.userId)
@@ -98,10 +96,9 @@ class login : AppCompatActivity() {
             } else {
                 userViewModel.getUser(userName, userPass) { user ->
                     if (user != null) {
-                        // ذخیره نام کاربری و userId در SharedPreferences
                         val editor = sharedPreferences.edit()
                         editor.putString("username", userName)
-                        editor.putInt("userOwnerId", user.userId)  // اضافه کردن userId
+                        editor.putInt("userOwnerId", user.userId)
                         editor.apply()
 
                         val intent = Intent(this, MainActivity::class.java)

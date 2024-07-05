@@ -11,7 +11,7 @@ import com.example.taskbin.Model.ProjectEntity
 import com.example.taskbin.Model.TargetEntity
 import com.example.taskbin.Model.UserEntity
 
-@Database(entities = [UserEntity::class, ProjectEntity::class, TargetEntity::class, ActivityEntity::class], version = 5)
+@Database(entities = [UserEntity::class, ProjectEntity::class, TargetEntity::class, ActivityEntity::class], version = 7)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
@@ -58,6 +58,26 @@ abstract class AppDatabase : RoomDatabase() {
                 database.execSQL("ALTER TABLE `target_table` ADD COLUMN `timestamp` INTEGER NOT NULL DEFAULT 0")
             }
         }
+        private val MIGRATION_5_6 = object : Migration(5, 6) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("""
+                    CREATE TABLE IF NOT EXISTS `project_stages` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `stageName` TEXT NOT NULL,
+                        `isCompleted` INTEGER NOT NULL DEFAULT 0,
+                        `projectId` INTEGER NOT NULL,
+                        FOREIGN KEY(`projectId`) REFERENCES `project_table`(`projectId`) ON DELETE CASCADE
+                    )
+                """)
+            }
+        }
+
+
+        private val MIGRATION_6_7 = object : Migration(6, 7) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("DROP TABLE IF EXISTS `project_stages`")
+            }
+        }
 
         fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
@@ -65,7 +85,7 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "app_database"
-                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5).build()
+                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7).build()
                 INSTANCE = instance
                 instance
             }
