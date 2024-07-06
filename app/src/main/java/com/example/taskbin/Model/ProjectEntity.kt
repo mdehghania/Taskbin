@@ -16,10 +16,9 @@ import androidx.room.PrimaryKey
 data class ProjectEntity(
     @PrimaryKey(autoGenerate = true) val projectId: Int = 0,
     val pName: String,
-    val pStages: String,
+    val pHour : String,
     val pTime: String,
     val pDate: String,
-    val pReminder: Boolean,
     val pPin: Boolean,
     val userOwnerId: Int
 )
