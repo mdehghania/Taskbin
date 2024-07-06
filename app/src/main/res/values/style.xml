@@ -3,7 +3,11 @@
 <resources>
     <style name="BottomNavActiveIndicatorStyle">
         <item name="android:itemBackground">@drawable/bg_select</item>
+    </style>
 
+    <style name="CustomAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="android:background">@android:color/white</item>
+        <item name="android:fontFamily">@font/vazir</item>
     </style>
 </resources>
 

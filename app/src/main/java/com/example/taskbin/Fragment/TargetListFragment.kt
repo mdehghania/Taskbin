@@ -5,13 +5,16 @@ import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -30,6 +33,7 @@ class TargetListFragment : Fragment() {
     private lateinit var adapter: TargetAdapter
     private val targetViewModel: TargetViewModel by viewModels {
         ViewModelFactory(
+
             (requireActivity().application as MyApplication).userRepository,
             null,
             (requireActivity().application as MyApplication).targetRepository
@@ -85,14 +89,29 @@ class TargetListFragment : Fragment() {
 
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     if (direction == ItemTouchHelper.RIGHT) {
-                        MaterialAlertDialogBuilder(requireContext())
-                            .setTitle("Delete Target")
-                            .setMessage("Are you sure you want to delete this target?")
-                            .setNegativeButton("Cancel") { dialog, _ ->
+                        val title = TextView(requireContext()).apply {
+                            text = "حذف هدف"
+                            textSize = 20f
+                            typeface = Typeface.DEFAULT_BOLD
+                            gravity = Gravity.RIGHT
+                            setPadding(0, 20, 20, 0)
+                        }
+
+                        val message = TextView(requireContext()).apply {
+                            text = "می خواهی حذف کنی؟"
+                            textSize = 16f
+                            gravity = Gravity.RIGHT
+                            setPadding(0, 20, 20, 0)
+                        }
+
+                        MaterialAlertDialogBuilder(requireContext(), R.style.CustomAlertDialog)
+                            .setCustomTitle(title)
+                            .setView(message)
+                            .setNegativeButton("لغو") { dialog, _ ->
                                 dialog.dismiss()
                                 adapter.notifyItemChanged(viewHolder.adapterPosition)
                             }
-                            .setPositiveButton("Delete") { dialog, _ ->
+                            .setPositiveButton("حذف") { dialog, _ ->
                                 val position = viewHolder.adapterPosition
                                 val target = adapter.getTargetAtPosition(position)
                                 targetViewModel.delete(target)
@@ -101,6 +120,7 @@ class TargetListFragment : Fragment() {
                             .show()
                     }
                 }
+
 
                 override fun onChildDraw(
                     c: Canvas,
@@ -112,7 +132,7 @@ class TargetListFragment : Fragment() {
                     isCurrentlyActive: Boolean
                 ) {
                     val itemView = viewHolder.itemView
-                    val background = ColorDrawable(ContextCompat.getColor(requireContext(), R.color.Red))
+                    val background = ColorDrawable(ContextCompat.getColor(requireContext(), R.color.backgrond))
                     val cornerRadius = 40f
                     val itemHeight = itemView.height.toFloat()
 

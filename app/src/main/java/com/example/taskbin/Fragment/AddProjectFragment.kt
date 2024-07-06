@@ -1,5 +1,6 @@
 package com.example.taskbin.Fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +15,7 @@ import com.example.taskbin.R
 class AddProjectFragment : Fragment() {
 
     private lateinit var stagesContainer: LinearLayout
-    private var stageCount = 1
+    private var stageCount = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,13 +26,13 @@ class AddProjectFragment : Fragment() {
         val addStageButton = view.findViewById<ImageButton>(R.id.addStages4)
 
         addStageButton.setOnClickListener {
-            addNewStage()
+            addNewStage(view.context)
         }
 
         return view
     }
 
-    private fun addNewStage() {
+    private fun addNewStage(context: Context) {
         stageCount++
 
         val newStageLayout = RelativeLayout(context).apply {
@@ -39,16 +40,17 @@ class AddProjectFragment : Fragment() {
                 RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT
             ).apply {
-                topMargin = 10
+                topMargin = 10.dpToPx()
             }
         }
 
         val newEditText = EditText(context).apply {
             id = View.generateViewId()
             layoutParams = RelativeLayout.LayoutParams(
-                230.dpToPx(),
-                50.dpToPx()
+                0,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
             ).apply {
+                width = RelativeLayout.LayoutParams.MATCH_PARENT // Match constraints horizontally
                 addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
             }
             background = resources.getDrawable(R.drawable.inputs, null)
@@ -57,6 +59,7 @@ class AddProjectFragment : Fragment() {
             setTextColor(resources.getColor(R.color.black, null))
             typeface = resources.getFont(R.font.vazirfdwol)
             setPadding(5.dpToPx(), 0, 5.dpToPx(), 0)
+            hint = "مرحله $stageCount"
         }
 
         val newImageButton = ImageButton(context).apply {
@@ -65,13 +68,14 @@ class AddProjectFragment : Fragment() {
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT
             ).apply {
+                addRule(RelativeLayout.START_OF, newEditText.id)
                 marginEnd = 15.dpToPx()
                 topMargin = 8.dpToPx()
-                addRule(RelativeLayout.START_OF, newEditText.id)
             }
             background = resources.getDrawable(R.drawable.stages, null)
             setOnClickListener {
-                // Here you can add the action for the ImageButton if needed
+                // Remove the view when the ImageButton is clicked
+                stagesContainer.removeView(newStageLayout)
             }
         }
 

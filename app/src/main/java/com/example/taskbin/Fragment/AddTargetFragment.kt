@@ -27,6 +27,7 @@ class AddTargetFragment : Fragment() {
     // ViewModel for targets
     private val targetViewModel: TargetViewModel by viewModels {
         ViewModelFactory(
+
             (requireActivity().application as MyApplication).userRepository,
             (requireActivity().application as MyApplication).activityRepository,
             (requireActivity().application as MyApplication).targetRepository
