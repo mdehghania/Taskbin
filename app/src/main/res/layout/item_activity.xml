@@ -44,6 +44,15 @@
                 android:textDirection="rtl"
                 android:textSize="16sp" />
 
+            <ImageView
+                android:id="@+id/pin"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/pinsimple"
+                app:srcCompat="@drawable/pinsimple"
+                android:layout_marginBottom="10dp"
+                />
+
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

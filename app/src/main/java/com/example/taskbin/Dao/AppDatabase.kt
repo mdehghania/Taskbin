@@ -12,7 +12,7 @@ import com.example.taskbin.Model.StagesEntity
 import com.example.taskbin.Model.TargetEntity
 import com.example.taskbin.Model.UserEntity
 
-@Database(entities = [UserEntity::class, ProjectEntity::class, TargetEntity::class, ActivityEntity::class, StagesEntity::class], version = 8)
+@Database(entities = [UserEntity::class, ProjectEntity::class, TargetEntity::class, ActivityEntity::class, StagesEntity::class], version = 9)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
@@ -124,7 +124,11 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-
+        private val MIGRATION_8_9 = object : Migration(8, 9) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE `project_table` ADD COLUMN `completed` INTEGER NOT NULL DEFAULT 0")
+            }
+        }
 
         fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
@@ -139,7 +143,8 @@ abstract class AppDatabase : RoomDatabase() {
                     MIGRATION_4_5,
                     MIGRATION_5_6,
                     MIGRATION_6_7,
-                    MIGRATION_7_8
+                    MIGRATION_7_8,
+                    MIGRATION_8_9
                 ).build()
                 INSTANCE = instance
                 instance

@@ -20,5 +20,6 @@ data class ProjectEntity(
     val pTime: String,
     val pDate: String,
     val pPin: Boolean,
+    var completed: Boolean,
     val userOwnerId: Int
 )

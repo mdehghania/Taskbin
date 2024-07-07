@@ -114,8 +114,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_below="@id/projectStages"
-                    android:layout_marginRight="-10dp"
-                    android:layout_marginLeft="-10dp"
                     android:layout_centerInParent="true"
                     android:layout_marginTop="10dp">
                 </LinearLayout>
@@ -142,12 +140,14 @@
                 </TextView>
                 <EditText
                     android:id="@+id/projectHoureInput"
-                    android:layout_width="380dp"
+                    android:layout_width="230dp"
                     android:layout_height="50dp"
                     android:layout_below="@+id/projectTime"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/inputs"
                     android:inputType="text"
+                    android:layout_alignParentRight="true"
+
                     android:layoutDirection="rtl"
                     android:textColor="#000000"
                     android:textDirection="rtl"
