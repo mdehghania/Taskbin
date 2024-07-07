@@ -4,7 +4,9 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewStub
 import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
@@ -18,11 +20,11 @@ class ActivityAdapter(
     private val onItemLongClickListener: (ActivityEntity) -> Unit
 ) : RecyclerView.Adapter<ActivityAdapter.ActivityViewHolder>() {
 
-    var checkedItemPosition: Int = RecyclerView.NO_POSITION // Change visibility to public
-
     inner class ActivityViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val activityName: TextView = itemView.findViewById(R.id.tvActivityName)
         private val activityCheckBox: CheckBox = itemView.findViewById(R.id.tvActivity)
+        private val pinStub: ViewStub = itemView.findViewById(R.id.pin_stub)
+        private var pinIcon: ImageView? = null
         private val cardView: CardView = itemView.findViewById(R.id.cardview2)
 
         init {
@@ -52,6 +54,16 @@ class ActivityAdapter(
         fun bind(activity: ActivityEntity, isChecked: Boolean, context: Context) {
             activityName.text = activity.aName
             activityCheckBox.isChecked = isChecked
+
+            if (activity.aPin) {
+                if (pinIcon == null) {
+                    pinIcon = pinStub.inflate() as ImageView
+                }
+                pinIcon?.visibility = View.VISIBLE
+            } else {
+                pinIcon?.visibility = View.GONE
+            }
+
             cardView.alpha = if (isChecked) 0.5f else 1f
 
             cardView.setCardBackgroundColor(
@@ -68,6 +80,7 @@ class ActivityAdapter(
                     onCheckboxClicked(activity.activityId, isChecked)
                     cardView.alpha = if (isChecked) 0.5f else 1f
                     saveCheckBoxState(context, activity.activityId, isChecked)
+                    sortAndNotifyWithDelay()
                 }
             }
         }
@@ -118,7 +131,7 @@ class ActivityAdapter(
 
     fun updateActivities(newActivities: List<ActivityEntity>) {
         this.activities = newActivities.toMutableList()
-        sortActivities() // Sort activities when updating the list
+        sortActivities()
         notifyDataSetChanged()
     }
 
@@ -129,24 +142,31 @@ class ActivityAdapter(
     fun updateActivityWithHandler(activities: List<ActivityEntity>) {
         this.activities = activities.toMutableList()
         Handler(Looper.getMainLooper()).post {
-            sortActivities() // Sort activities when updating with handler
+            sortActivities()
+            notifyDataSetChanged()
+        }
+    }
+
+    private fun sortAndNotifyWithDelay() {
+        Handler(Looper.getMainLooper()).post {
+            sortActivities()
             notifyDataSetChanged()
         }
     }
 
     private fun sortActivities() {
-        activities.sortBy { it.completed }
-    }
-
-    private fun moveItemToEnd(position: Int) {
-        val item = activities.removeAt(position)
-        activities.add(item)
-        notifyItemMoved(position, activities.size - 1)
-    }
-
-    private fun moveItemToStart(position: Int) {
-        val item = activities.removeAt(position)
-        activities.add(0, item)
-        notifyItemMoved(position, 0)
+        activities.sortWith(compareByDescending<ActivityEntity> {
+            it.aPin && !it.completed
+        }.thenBy {
+            it.completed
+        })
     }
 }
+
+
+
+
+
+
+
+

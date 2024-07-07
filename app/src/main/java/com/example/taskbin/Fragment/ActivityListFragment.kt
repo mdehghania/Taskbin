@@ -86,6 +86,7 @@ class ActivityListFragment : Fragment() {
                 }
             }
 
+
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
             override fun onMove(
                 recyclerView: RecyclerView,
