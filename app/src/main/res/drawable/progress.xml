@@ -1,0 +1,21 @@
+<!-- res/drawable/progress_bar_horizontal.xml -->
+<layer-list xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:ignore="MissingDefaultResource">
+    <!-- Background Layer -->
+    <item android:id="@android:id/background">
+        <shape>
+            <corners android:radius="10dp" /> <!-- ردیوس برای ابتدا و انتهای نوار -->
+            <solid android:color="@android:color/white" /> <!-- رنگ زمینه -->
+        </shape>
+    </item>
+    <!-- Progress Layer -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <corners android:radius="100dp" /> <!-- ردیوس برای نوار داخلی -->
+                <solid android:color="@color/blue" /> <!-- رنگ نوار پیشرفت -->
+            </shape>
+        </clip>
+    </item>
+</layer-list>

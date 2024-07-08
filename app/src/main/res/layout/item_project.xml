@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="0dp"
+    android:orientation="horizontal"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="0dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/light_blue"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/cardview1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="30dp">
+
+            <CheckBox
+                android:id="@+id/cbProjet"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/check_btn"
+                android:button="@null"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/vazirfdwol"
+                android:text=""
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tvProjectName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_toStartOf="@+id/cbProjet"
+                android:layout_weight="1"
+                android:layout_marginRight="25dp"
+                android:fontFamily="@font/vazirfdwol"
+                android:text="Project Name"
+                android:textDirection="rtl"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/pinImage"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/pinsimple"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:visibility="visible">
+
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/time"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_below="@+id/tvProjectName"
+                android:src="@drawable/time"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="40dp"
+                />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:layout_below="@+id/tvProjectName"
+                android:layout_marginRight="10dp"
+                android:layout_toStartOf="@+id/time"
+                android:fontFamily="@font/vazirfdwol"
+                android:text="3 روز"
+                android:textSize="10dp">
+
+            </TextView>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/time"
+                android:max="90"
+                android:progress="80"
+                android:progressBackgroundTint="@android:color/white"
+                android:progressTint="@color/blue"
+                android:layout_alignParentRight="true"
+                android:progressDrawable="@drawable/progress"
+                android:layout_marginRight="32dp"
+                android:textDirection="rtl"
+                android:layout_marginTop="5dp"
+                android:layoutDirection="rtl"
+                />
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>

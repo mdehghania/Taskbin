@@ -1,6 +1,8 @@
 package com.example.taskbin.View.Signin
 
 import android.content.Intent
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageButton
@@ -12,6 +14,7 @@ import com.example.taskbin.MyApplication
 import com.example.taskbin.R
 import com.example.taskbin.ViewModel.UserViewModel
 import com.example.taskbin.ViewModel.ViewModelFactory
+import java.util.Locale
 
 class inputPhone : AppCompatActivity() {
     private lateinit var phoneEditText: EditText
@@ -22,6 +25,9 @@ class inputPhone : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setLocaleAndDirection() // Set Locale and layout direction
+
         setContentView(R.layout.activity_input_phone)
 
         phoneEditText = findViewById(R.id.txtPhone)
@@ -48,5 +54,15 @@ class inputPhone : AppCompatActivity() {
                 })
             }
         }
+    }
+
+    private fun setLocaleAndDirection() {
+        val locale = Locale("en")
+        Locale.setDefault(locale)
+        val resources: Resources = resources
+        val config: Configuration = resources.configuration
+        config.setLocale(locale)
+        config.setLayoutDirection(Locale("en")) // Set layout direction to LTR
+        resources.updateConfiguration(config, resources.displayMetrics)
     }
 }

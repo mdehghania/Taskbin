@@ -1,6 +1,8 @@
 package com.example.taskbin.View.Signin
 
 import android.content.Intent
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageButton
@@ -12,7 +14,7 @@ import com.example.taskbin.MyApplication
 import com.example.taskbin.R
 import com.example.taskbin.ViewModel.UserViewModel
 import com.example.taskbin.ViewModel.ViewModelFactory
-
+import java.util.Locale
 
 class inputUserName : AppCompatActivity() {
     private lateinit var userNameEditText: EditText
@@ -22,6 +24,9 @@ class inputUserName : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setLocaleAndDirection() // Set Locale and layout direction
+
         setContentView(R.layout.activity_input_user_name)
 
         userNameEditText = findViewById(R.id.txtUserName)
@@ -42,5 +47,15 @@ class inputUserName : AppCompatActivity() {
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             }
         }
+    }
+
+    private fun setLocaleAndDirection() {
+        val locale = Locale("en")
+        Locale.setDefault(locale)
+        val resources: Resources = resources
+        val config: Configuration = resources.configuration
+        config.setLocale(locale)
+        config.setLayoutDirection(Locale("en")) // Set layout direction to LTR
+        resources.updateConfiguration(config, resources.displayMetrics)
     }
 }

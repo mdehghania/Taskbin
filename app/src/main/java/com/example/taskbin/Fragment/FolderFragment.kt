@@ -39,6 +39,12 @@ class FolderFragment : Fragment() {
         val persianDate = "${today.dayOfMonth} ${getPersianMonthName(today.month)} ${today.year}"
         toDayDateTextView.text = persianDate
 
+        if (savedInstanceState == null) {
+            childFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainerViewP, ProjectListFragment())
+                .commit()
+        }
+
     }
     private fun getPersianMonthName(month: Int): String {
         return when (month) {

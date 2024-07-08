@@ -1,5 +1,7 @@
 package com.example.taskbin.View
 
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -11,6 +13,7 @@ import com.example.taskbin.Fragment.HomeFragment
 import com.example.taskbin.Fragment.TrapgyFragment
 import com.example.taskbin.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
     private lateinit var bottomNavigationView: BottomNavigationView
@@ -18,6 +21,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setLocaleAndDirection()  // Set Locale and layout direction
+
         setContentView(R.layout.activity_main)
 
         bottomNavigationView = findViewById(R.id.bottom_navigation)
@@ -51,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.registerFragmentLifecycleCallbacks(object : FragmentManager.FragmentLifecycleCallbacks() {
             override fun onFragmentResumed(fm: FragmentManager, f: Fragment) {
                 super.onFragmentResumed(fm, f)
-                if (f !is AddActivityFragment && f !is AddProjectFragment && f !is AddTargetFragment) {
+                if (f !is AddProjectFragment && f !is AddTargetFragment) {
                     bottomNavigationView.visibility = BottomNavigationView.VISIBLE
                 }
             }
@@ -94,5 +100,15 @@ class MainActivity : AppCompatActivity() {
         } else {
             super.onBackPressed()
         }
+    }
+
+    private fun setLocaleAndDirection() {
+        val locale = Locale("en")
+        Locale.setDefault(locale)
+        val resources: Resources = resources
+        val config: Configuration = resources.configuration
+        config.setLocale(locale)
+        config.setLayoutDirection(Locale("en")) // Set layout direction to LTR
+        resources.updateConfiguration(config, resources.displayMetrics)
     }
 }

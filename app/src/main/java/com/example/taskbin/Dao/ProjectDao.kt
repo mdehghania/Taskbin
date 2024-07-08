@@ -1,5 +1,6 @@
 package com.example.taskbin.Dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Embedded
@@ -30,6 +31,12 @@ interface ProjectDao {
 
     @Insert
     suspend fun insertStages(stages: List<StagesEntity>)
+
+    @Query("SELECT * FROM project_table  WHERE userOwnerId = :userOwnerId")
+    fun getProjectsByUserOwnerId(userOwnerId: Int): LiveData<List<ProjectEntity>>
+
+    @Query("UPDATE project_table SET completed = :completed WHERE projectId = :projectId")
+    suspend fun updateCompletion(projectId: Int, completed: Boolean)
 
     @Transaction
     suspend fun insertProjectWithStages(project: ProjectEntity, stages: List<StagesEntity>) {
