@@ -1,6 +1,7 @@
 package com.example.taskbin.ViewModel
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.taskbin.Model.ProjectEntity
@@ -22,24 +23,29 @@ class ProjectViewModel(private val repository: ProjectRepository) : ViewModel() 
         repository.delete(project)
     }
 
-    //    fun getProjectsByUser(userId: Int, callback: (List<ProjectEntity>) -> Unit) = viewModelScope.launch {
-//        val projects = repository.getProjectsByUser(userId)
-//        callback(projects)
-//    }
     fun getProjectByUserOwnerId(userOwnerId: Int): LiveData<List<ProjectEntity>> {
         return repository.getProjectsByUser(userOwnerId)
     }
+
+
     fun insertProjectWithStages(project: ProjectEntity, stages: List<StagesEntity>) {
         viewModelScope.launch {
             repository.insertProjectWithStages(project, stages)
         }
     }
+
     fun updateCompletion(projectId: Int, completed: Boolean) {
         viewModelScope.launch {
-            repository.updateCompletion(
-                projectId,
-                completed
-            )
+            repository.updateCompletion(projectId, completed)
         }
+    }
+
+    fun getStagesByProjectOwnerId(projectOwnerId: Int): LiveData<List<StagesEntity>> {
+        val stagesLiveData = MutableLiveData<List<StagesEntity>>()
+        viewModelScope.launch {
+            val stages = repository.getStagesByProjectOwnerId(projectOwnerId)
+            stagesLiveData.postValue(stages)
+        }
+        return stagesLiveData
     }
 }

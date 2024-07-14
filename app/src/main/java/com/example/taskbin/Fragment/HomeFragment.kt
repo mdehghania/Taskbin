@@ -69,7 +69,6 @@ class HomeFragment : Fragment() {
             }
         })
 
-        // اینجا اضافه کردن Fragment به FrameLayout
         if (savedInstanceState == null) {
             updateActivityListFragment(selectedDate)
         }
@@ -162,9 +161,7 @@ class HomeFragment : Fragment() {
             .commit()
     }
 
-    fun getSelectedDate(): PersianCalendar {
-        return selectedDate
-    }
+
 
     private fun PersianCalendar.isSameDay(other: PersianCalendar): Boolean {
         return this.year == other.year && this.month == other.month && this.dayOfMonth == other.dayOfMonth

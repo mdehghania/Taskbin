@@ -206,6 +206,7 @@
                     android:textDirection="rtl"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    android:fontFamily="@font/vazirfdwol"
                     />
 
                 <TextView
@@ -236,6 +237,7 @@
                     android:textDirection="rtl"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    android:fontFamily="@font/vazirfdwol"
                     />
 
                 <Button

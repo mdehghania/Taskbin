@@ -81,7 +81,7 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        // Migration 7 to 8: Remove columns from ProjectEntity and add new column, create new stage_table
+
         private val MIGRATION_7_8 = object : Migration(7, 8) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 // Create new project_table with the new structure
@@ -98,20 +98,16 @@ abstract class AppDatabase : RoomDatabase() {
             )
         """)
 
-                // Copy the data from the old project_table to the new project_table
                 database.execSQL("""
             INSERT INTO project_table_new (projectId, pName, pTime, pDate, pPin, userOwnerId)
             SELECT projectId, pName, pTime, pDate, pPin, userOwnerId
             FROM project_table
         """)
 
-                // Drop the old project_table
                 database.execSQL("DROP TABLE project_table")
 
-                // Rename the new table to the original table name
                 database.execSQL("ALTER TABLE project_table_new RENAME TO project_table")
 
-                // Create the stage_table
                 database.execSQL("""
             CREATE TABLE IF NOT EXISTS stage_table (
                 stageId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,

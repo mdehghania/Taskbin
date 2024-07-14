@@ -2,8 +2,11 @@ package com.example.taskbin.View
 
 import android.content.res.Configuration
 import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.taskbin.Fragment.AddProjectFragment
@@ -22,7 +25,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setLocaleAndDirection()  // Set Locale and layout direction
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.statusBarColor = ContextCompat.getColor(this, R.color.white)
+            window.navigationBarColor = ContextCompat.getColor(this, R.color.backgrond)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                val decor = window.decorView
+                decor.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            }
+        }
+
+        setLocaleAndDirection()
 
         setContentView(R.layout.activity_main)
 
@@ -57,7 +69,9 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.registerFragmentLifecycleCallbacks(object : FragmentManager.FragmentLifecycleCallbacks() {
             override fun onFragmentResumed(fm: FragmentManager, f: Fragment) {
                 super.onFragmentResumed(fm, f)
-                if (f !is AddProjectFragment && f !is AddTargetFragment) {
+                if (f is AddProjectFragment || f is AddTargetFragment || f is AddActivityFragment) {
+                    bottomNavigationView.visibility = BottomNavigationView.GONE
+                } else {
                     bottomNavigationView.visibility = BottomNavigationView.VISIBLE
                 }
             }
@@ -108,7 +122,7 @@ class MainActivity : AppCompatActivity() {
         val resources: Resources = resources
         val config: Configuration = resources.configuration
         config.setLocale(locale)
-        config.setLayoutDirection(Locale("en")) // Set layout direction to LTR
+        config.setLayoutDirection(Locale("en"))
         resources.updateConfiguration(config, resources.displayMetrics)
     }
 }

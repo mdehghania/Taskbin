@@ -39,11 +39,11 @@ class Profile : AppCompatActivity() {
         btnLogout = findViewById(R.id.btnLogout)
         editUserNametxt = findViewById(R.id.editUserNametxt)
 
-        // بازیابی نام کاربری از SharedPreferences
+
         val sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE)
         val userName = sharedPreferences.getString("username", "User")
 
-        // بازیابی و نمایش نام کاربری از ViewModel
+
         userName?.let { name ->
             userViewModel.getUserByUsername(name) { user ->
                 user?.let {
@@ -52,14 +52,14 @@ class Profile : AppCompatActivity() {
             }
         }
 
-        // مشاهده تغییرات در داده‌های کاربر
+
         userViewModel.userByUsername.observe(this, Observer { user: UserEntity? ->
             user?.let {
                 userNameTextView.text = it.username
             }
         })
 
-        // تنظیم کلیک برای ویرایش نام کاربری
+
         editUserNametxt.setOnClickListener {
             val dialogView = layoutInflater.inflate(R.layout.dialog_profile_layout, null)
             val inputNewPass = dialogView.findViewById<EditText>(R.id.inputNewPass)
@@ -132,7 +132,7 @@ class Profile : AppCompatActivity() {
                         userNameTextView.text = newUserName
                     }
 
-                    // بازیابی و نمایش نام کاربری جدید از ViewModel
+
                     userViewModel.getUserByUsername(newUserName) { user ->
                         user?.let {
                             userNameTextView.text = it.username

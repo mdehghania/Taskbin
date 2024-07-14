@@ -78,6 +78,11 @@ dependencies {
     implementation ("androidx.recyclerview:recyclerview:1.2.1")
     implementation ("androidx.cardview:cardview:1.0.0")
     implementation ("androidx.biometric:biometric:1.2.0-alpha04")
+    implementation ("com.github.aliab:Persian-Date-Picker-Dialog:1.8.0")
+
+    //clock
+    implementation ("net.danlew:android.joda:2.10.9.1")
+
 
 
 

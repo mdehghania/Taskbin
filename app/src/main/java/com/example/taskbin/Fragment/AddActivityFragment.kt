@@ -1,8 +1,15 @@
 package com.example.taskbin.View
 
+import android.app.AlarmManager
+import android.app.AlertDialog
+import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +17,7 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.NumberPicker
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
@@ -20,6 +28,7 @@ import com.aminography.primecalendar.persian.PersianCalendar
 import com.example.taskbin.Model.ActivityEntity
 import com.example.taskbin.MyApplication
 import com.example.taskbin.R
+import com.example.taskbin.ReminderBroadcastReceiver
 import com.example.taskbin.ViewModel.ActivityViewModel
 import com.example.taskbin.ViewModel.SharedViewModel
 import com.example.taskbin.ViewModel.ViewModelFactory
@@ -84,10 +93,12 @@ class AddActivityFragment : Fragment() {
             updateSelectedRadioButtonText(checkedId)
         }
 
+        activityTimeInput.inputType = InputType.TYPE_NULL
         activityTimeInput.setOnClickListener {
-            showTimePickerDialog(activityTimeInput)
+            showTimeDurationPickerDialog()
         }
 
+        activityHoureInput.inputType = InputType.TYPE_NULL
         activityHoureInput.setOnClickListener {
             showTimePickerDialog(activityHoureInput)
         }
@@ -96,7 +107,6 @@ class AddActivityFragment : Fragment() {
             activity?.onBackPressed()
         }
 
-        // خواندن selectedDate از SharedPreferences
         val sharedPreferences1 = requireContext().getSharedPreferences("SelectedDatePrefs", Context.MODE_PRIVATE)
         val selectedDateMillis = sharedPreferences1.getLong("selectedDate", PersianCalendar().timeInMillis)
         selectedDate = PersianCalendar().apply { timeInMillis = selectedDateMillis }
@@ -108,15 +118,15 @@ class AddActivityFragment : Fragment() {
         btnSaveActivity.setOnClickListener {
             if (validateInput()) {
                 saveActivity()
-                // تنظیم selectedDate در SharedViewModel پس از ذخیره فعالیت
+
                 sharedViewModel.setSelectedDate(selectedDate)
                 activity?.onBackPressed()
             } else {
-                Toast.makeText(requireContext(), "Please fill in all required fields", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "لطفا همه ی فیلد ها را پر کنید.", Toast.LENGTH_SHORT).show()
             }
         }
 
-        // Read userOwnerId from SharedPreferences
+
         val sharedPreferences = requireActivity().getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
         userOwnerId = sharedPreferences.getInt("userOwnerId", 0)
 
@@ -141,14 +151,74 @@ class AddActivityFragment : Fragment() {
 
     private fun showTimePickerDialog(targetEditText: EditText) {
         val calendar = Calendar.getInstance()
-        val hour = calendar.get(Calendar.HOUR_OF_DAY)
-        val minute = calendar.get(Calendar.MINUTE)
-        val timeSetListener = TimePickerDialog.OnTimeSetListener { _, selectedHour, selectedMinute ->
-            val formattedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
-            targetEditText.setText(convertToPersian(formattedTime))
+        val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
+        val currentMinute = calendar.get(Calendar.MINUTE)
+
+        val selectedCalendar = Calendar.getInstance().apply {
+            timeInMillis = selectedDate.timeInMillis
         }
 
-        TimePickerDialog(requireContext(), timeSetListener, hour, minute, true).show()
+        val isToday = calendar.get(Calendar.YEAR) == selectedCalendar.get(Calendar.YEAR) &&
+                calendar.get(Calendar.DAY_OF_YEAR) == selectedCalendar.get(Calendar.DAY_OF_YEAR)
+
+        val timePickerDialog = TimePickerDialog(requireContext(), { _, selectedHour, selectedMinute ->
+            if (isToday && (selectedHour < currentHour || (selectedHour == currentHour && selectedMinute < currentMinute))) {
+                Toast.makeText(requireContext(), "زمان انتخاب شده نمی تواند قبل از زمان جاری باشد", Toast.LENGTH_SHORT).show()
+                showTimePickerDialog(targetEditText) // نمایش دوباره دیالوگ
+            } else {
+                val formattedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
+                targetEditText.setText(convertToPersian(formattedTime))
+            }
+        }, currentHour, currentMinute, true)
+
+        if (isToday) {
+            timePickerDialog.updateTime(currentHour, currentMinute)
+        }
+
+        timePickerDialog.show()
+    }
+
+
+
+    private fun showTimeDurationPickerDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_time_duration_picker, null)
+        val hourPicker = dialogView.findViewById<NumberPicker>(R.id.hourPicker)
+        val minutePicker = dialogView.findViewById<NumberPicker>(R.id.minutePicker)
+        val cancelButton = dialogView.findViewById<Button>(R.id.cancelButton)
+        val okButton = dialogView.findViewById<Button>(R.id.okButton)
+
+        // تنظیم محدوده مقادیر
+        hourPicker.minValue = 0
+        hourPicker.maxValue = 23
+        hourPicker.wrapSelectorWheel = true
+
+        minutePicker.minValue = 0
+        minutePicker.maxValue = 59
+        minutePicker.wrapSelectorWheel = true
+        minutePicker.setFormatter { i -> String.format("%02d", i) }
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
+
+        cancelButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        okButton.setOnClickListener {
+            val selectedHour = hourPicker.value
+            val selectedMinute = minutePicker.value
+            val selectedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
+            activityTimeInput.setText(selectedTime)
+            dialog.dismiss()
+        }
+        dialog.setOnShowListener {
+            val window = dialog.window
+            window?.setLayout(250.dpToPx(requireContext()), ViewGroup.LayoutParams.WRAP_CONTENT)
+        }
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
     }
 
     private fun convertToPersian(input: String): String {
@@ -170,6 +240,7 @@ class AddActivityFragment : Fragment() {
 
         return nameInput.isNotEmpty() && selectedRadioButtonId != -1
     }
+
 
     private fun saveActivity() {
         val nameInput = activityNameInput.text.toString()
@@ -194,11 +265,39 @@ class AddActivityFragment : Fragment() {
         )
 
         activityViewModel.insert(activity)
-        Toast.makeText(requireContext(), "Activity saved successfully", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "فعالیت با موفقیت ذخیره شد.", Toast.LENGTH_SHORT).show()
+
+        // تنظیم نوتیفیکیشن
+        setNotification(nameInput, selectedDate, hourInput)
 
         sharedViewModel.setSelectedDate(selectedDate)
 
         // بازگشت به فرگمنت قبلی
         parentFragmentManager.popBackStack()
     }
+
+    private fun setNotification(activityName: String, date: PersianCalendar, time: String) {
+        val (hour, minute) = time.split(":").map { it.toInt() }
+        val calendar = Calendar.getInstance().apply {
+            timeInMillis = date.timeInMillis
+            set(Calendar.HOUR_OF_DAY, hour)
+            set(Calendar.MINUTE, minute)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+
+        val intent = Intent(requireContext(), ReminderBroadcastReceiver::class.java).apply {
+            putExtra("activity_name", activityName)
+            putExtra("notification_id", activityName.hashCode())
+        }
+        val pendingIntent = PendingIntent.getBroadcast(requireContext(), activityName.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+    }
+
+    fun Int.dpToPx(context: Context): Int {
+        val density = context.resources.displayMetrics.density
+        return (this * density).toInt()
+    }
 }
+

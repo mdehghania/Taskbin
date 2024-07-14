@@ -38,6 +38,10 @@ interface ProjectDao {
     @Query("UPDATE project_table SET completed = :completed WHERE projectId = :projectId")
     suspend fun updateCompletion(projectId: Int, completed: Boolean)
 
+    @Query("SELECT * FROM stage_table WHERE projectOwnerId = :projectOwnerId")
+    suspend fun getStagesByProjectOwnerId(projectOwnerId: Int): List<StagesEntity>
+
+
     @Transaction
     suspend fun insertProjectWithStages(project: ProjectEntity, stages: List<StagesEntity>) {
         val projectId = insertProject(project)
@@ -47,6 +51,8 @@ interface ProjectDao {
 
     @Query("SELECT * FROM project_table WHERE projectId = :projectId")
     suspend fun getProjectWithStages(projectId: Int): ProjectWithStages
+
+
 }
 
 data class ProjectWithStages(

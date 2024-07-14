@@ -55,14 +55,14 @@ class TargetListFragment : Fragment() {
             targetViewModel.updateCompletion(targetId, isChecked)
             sortAndNotifyAdapter()
         }, { target ->
-            if (!target.completed) { // فقط آیتم‌هایی که تکمیل نشده‌اند قابل ویرایش هستند
+            if (!target.completed) {
                 showEditDialog(target)
             }
         })
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        val spaceInPixels = resources.getDimensionPixelSize(R.dimen.item_space) // Define item_space in resources
+        val spaceInPixels = resources.getDimensionPixelSize(R.dimen.item_space)
         recyclerView.addItemDecoration(SpaceItemDecoration(spaceInPixels, RecyclerView.VERTICAL))
 
         val sharedPreferences =
@@ -73,7 +73,7 @@ class TargetListFragment : Fragment() {
             .observe(viewLifecycleOwner) { targets ->
                 targets?.let {
                     adapter.updateTargets(it)
-                    sortAndNotifyAdapter() // اضافه کردن مرتب‌سازی پس از بارگذاری داده‌ها
+                    sortAndNotifyAdapter()
                 }
             }
 
@@ -138,35 +138,32 @@ class TargetListFragment : Fragment() {
 
                     val path = android.graphics.Path().apply {
                         addRoundRect(
-                            itemView.left.toFloat(), // Left
-                            itemView.top.toFloat(), // Top
-                            itemView.left + dX, // Right (including swipe distance)
-                            itemView.top + itemHeight, // Bottom (same as top + item height)
+                            itemView.left.toFloat(),
+                            itemView.top.toFloat(),
+                            itemView.left + dX,
+                            itemView.top + itemHeight,
                             floatArrayOf(
-                                cornerRadius, // Top left corner: rounded
-                                0f, // Top right corner: 0 radius
-                                0f, // Bottom right corner: 0 radius
-                                cornerRadius, // Bottom left corner: rounded
-                                0f, // Bottom left corner: 0 radius
-                                cornerRadius, // Top left corner: rounded
-                                0f, // Top right corner: 0 radius
-                                0f // Bottom right corner: 0 radius
+                                cornerRadius,
+                                0f,
+                                0f,
+                                cornerRadius,
+                                0f,
+                                cornerRadius,
+                                0f,
+                                0f
                             ),
                             android.graphics.Path.Direction.CW
                         )
                     }
 
-// Apply the clip path to limit the drawing area
                     c.clipPath(path)
 
-                    // Draw the background color
                     background.setBounds(
                         itemView.left, itemView.top,
                         itemView.left + dX.toInt(), itemView.bottom
                     )
                     background.draw(c)
 
-                    // Draw the delete icon
                     val icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_delete)!!
                     val iconMargin = (itemView.height - icon.intrinsicHeight) / 2
                     val iconTop = itemView.top + (itemView.height - icon.intrinsicHeight) / 2
@@ -235,7 +232,7 @@ class TargetListFragment : Fragment() {
             target.tDesc = etTargetDescription.text.toString()
 
             targetViewModel.update(target)
-            sortAndNotifyAdapter() // مرتب‌سازی پس از به‌روزرسانی داده‌ها
+            sortAndNotifyAdapter()
             dialogBuilder.dismiss()
         }
 
@@ -243,7 +240,6 @@ class TargetListFragment : Fragment() {
             dialogBuilder.dismiss()
         }
 
-        // تنظیم عرض دیالوگ
         dialogBuilder.setOnShowListener {
             val window = dialogBuilder.window
             window?.setLayout(350.dpToPx(requireContext()), ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -252,7 +248,6 @@ class TargetListFragment : Fragment() {
         dialogBuilder.show()
     }
 
-    // تابع الحاقی برای تبدیل dp به پیکسل
     fun Int.dpToPx(context: Context): Int {
         return (this * context.resources.displayMetrics.density).toInt()
     }

@@ -28,7 +28,7 @@ class inputPass : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setLocaleAndDirection() // Set Locale and layout direction
+        setLocaleAndDirection()
 
         setContentView(R.layout.activity_input_pass)
 
@@ -43,9 +43,9 @@ class inputPass : AppCompatActivity() {
             val returnPassword = returnPassEditText.text.toString()
 
             if (password.isEmpty() || returnPassword.isEmpty()) {
-                Toast.makeText(this, "Please fill in both fields", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "لطفا هر دو فیلد را پر کنید", Toast.LENGTH_SHORT).show()
             } else if (password != returnPassword) {
-                Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "رمز ورود مطابقت ندارند", Toast.LENGTH_SHORT).show()
             } else {
                 userViewModel.fetchUserByUsername(userName ?: "")
                 userViewModel.userByUsername.observe(this, Observer { user ->
@@ -67,7 +67,7 @@ class inputPass : AppCompatActivity() {
         val resources: Resources = resources
         val config: Configuration = resources.configuration
         config.setLocale(locale)
-        config.setLayoutDirection(Locale("en")) // Set layout direction to LTR
+        config.setLayoutDirection(Locale("en"))
         resources.updateConfiguration(config, resources.displayMetrics)
     }
 }

@@ -33,8 +33,7 @@ class login : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setLocaleAndDirection() // Set Locale and layout direction
-
+        setLocaleAndDirection()
         setContentView(R.layout.activity_login)
 
         userNameEditText = findViewById(R.id.edittext)
@@ -50,12 +49,12 @@ class login : AppCompatActivity() {
         biometricPrompt = BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                 super.onAuthenticationError(errorCode, errString)
-                Toast.makeText(applicationContext, "Authentication error: $errString", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "خطا احراز هویت: $errString", Toast.LENGTH_SHORT).show()
             }
 
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 super.onAuthenticationSucceeded(result)
-                Toast.makeText(applicationContext, "Authentication succeeded!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "احراز هویت با موفقیت انجام شد!", Toast.LENGTH_SHORT).show()
                 val userName = userNameEditText.text.toString()
                 if (userName.isNotEmpty()) {
                     userViewModel.getUserByUsername(userName) { user ->
@@ -69,24 +68,24 @@ class login : AppCompatActivity() {
                             startActivity(intent)
                             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                         } else {
-                            Toast.makeText(applicationContext, "User not found", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(applicationContext, "کاربر وارد نشد", Toast.LENGTH_SHORT).show()
                         }
                     }
                 } else {
-                    Toast.makeText(applicationContext, "Please enter your username", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "لطفا نام کاربری خود را وارد نمایید", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onAuthenticationFailed() {
                 super.onAuthenticationFailed()
-                Toast.makeText(applicationContext, "Authentication failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "احراز هویت ناموفق بود", Toast.LENGTH_SHORT).show()
             }
         })
 
         promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Biometric login for my app")
-            .setSubtitle("Log in using your biometric credential")
-            .setNegativeButtonText("Use account password")
+            .setTitle("ورود اثر انگشت برای برنامه من")
+            .setSubtitle("با استفاده از اثر انگشت خود وارد شوید")
+            .setNegativeButtonText("از رمز عبور حساب کاربری استفاده کنید")
             .build()
 
         btnFingerprintLogin.setOnClickListener {
@@ -98,7 +97,7 @@ class login : AppCompatActivity() {
             val userPass = userPassEditText.text.toString()
 
             if (userName.isEmpty() || userPass.isEmpty()) {
-                Toast.makeText(this, "Please fill in both fields", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "لطفا هر دو فیلد را پر کنید", Toast.LENGTH_SHORT).show()
             } else {
                 userViewModel.getUser(userName, userPass) { user ->
                     if (user != null) {
@@ -124,7 +123,7 @@ class login : AppCompatActivity() {
         val resources: Resources = resources
         val config: Configuration = resources.configuration
         config.setLocale(locale)
-        config.setLayoutDirection(Locale("en")) // Set layout direction to LTR
+        config.setLayoutDirection(Locale("en"))
         resources.updateConfiguration(config, resources.displayMetrics)
     }
 }

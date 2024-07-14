@@ -29,7 +29,7 @@ class TargetViewModel(private val repository: TargetRepository) : ViewModel() {
             repository.updateCompletion(
                 targetId,
                 completed
-            )  // تغییر اینجا از targetRepository به repository
+            )
         }
     }
 }

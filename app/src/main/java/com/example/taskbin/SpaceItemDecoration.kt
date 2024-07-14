@@ -13,7 +13,6 @@ class SpaceItemDecoration(private val space: Int, private val orientation: Int) 
     ) {
         super.getItemOffsets(outRect, view, parent, state)
 
-        // Only add top/bottom margin if the item is not the first one
         val position = parent.getChildAdapterPosition(view)
         if (position != 0) {
             if (orientation == RecyclerView.VERTICAL) {

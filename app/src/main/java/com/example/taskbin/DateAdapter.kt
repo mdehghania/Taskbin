@@ -51,7 +51,7 @@ class DateAdapter(
             notifyItemChanged(position)
 
             onDateSelected(date)
-            saveSelectedDateToPreferences(date) // اضافه کردن این خط
+            saveSelectedDateToPreferences(date)
         }
     }
 

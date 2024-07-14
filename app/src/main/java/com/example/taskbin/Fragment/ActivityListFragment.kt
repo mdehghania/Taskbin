@@ -3,12 +3,14 @@ package com.example.taskbin.View
 import ActivityAdapter
 import SpaceItemDecoration
 import android.app.AlertDialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.InputType
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +18,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.NumberPicker
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -33,6 +36,7 @@ import com.example.taskbin.ViewModel.ActivityViewModel
 import com.example.taskbin.ViewModel.ViewModelFactory
 import com.example.taskbin.isSameDay
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.util.Calendar
 
 class ActivityListFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
@@ -59,7 +63,7 @@ class ActivityListFragment : Fragment() {
             activityViewModel.updateCompletion(activityId, isChecked)
             sortAndNotifyAdapter()
         }, { activity ->
-            if (!activity.completed) { // فقط آیتم‌هایی که تکمیل نشده‌اند قابل ویرایش هستند
+            if (!activity.completed) {
                 showEditDialog(activity)
             }
         })
@@ -147,34 +151,33 @@ class ActivityListFragment : Fragment() {
                 val itemHeight = itemView.height.toFloat()
 
                 val radii = floatArrayOf(
-                    cornerRadius, cornerRadius, // Top left corner
-                    cornerRadius, cornerRadius, // Top right corner
-                    cornerRadius, cornerRadius, // Bottom right corner
-                    cornerRadius, cornerRadius  // Bottom left corner
+                    cornerRadius, cornerRadius,
+                    cornerRadius, cornerRadius,
+                    cornerRadius, cornerRadius,
+                    cornerRadius, cornerRadius
                 )
 
                 val path = android.graphics.Path().apply {
                     addRoundRect(
-                        itemView.left.toFloat(), // Left
-                        itemView.top.toFloat(), // Top
-                        itemView.left + dX, // Right (including swipe distance)
-                        itemView.top + itemHeight, // Bottom (same as top + item height)
+                        itemView.left.toFloat(),
+                        itemView.top.toFloat(),
+                        itemView.left + dX,
+                        itemView.top + itemHeight,
                         radii,
                         android.graphics.Path.Direction.CW
                     )
                 }
 
-                // Apply the clip path to limit the drawing area
+
                 c.clipPath(path)
 
-                // Draw the background color
+
                 background.setBounds(
                     itemView.left, itemView.top,
                     itemView.left + dX.toInt(), itemView.bottom
                 )
                 background.draw(c)
 
-                // Draw the delete icon
                 val icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_delete)!!
                 val iconMargin = (itemView.height - icon.intrinsicHeight) / 2
                 val iconTop = itemView.top + (itemView.height - icon.intrinsicHeight) / 2
@@ -216,12 +219,13 @@ class ActivityListFragment : Fragment() {
         val etTimeInput = dialogView.findViewById<EditText>(R.id.activityTimeInput)
         val etHourInput = dialogView.findViewById<EditText>(R.id.activityHoureInput)
         val checkBoxPin = dialogView.findViewById<CheckBox>(R.id.checkButtonPin)
-        val btnSaveUpdateTarget = dialogView.findViewById<Button>(R.id.btnSaveUpdateTarget)
-        val btnCancelUpdateTarget = dialogView.findViewById<Button>(R.id.btnCancleUpdateTarget)
+        val btnSaveUpdateActivity = dialogView.findViewById<Button>(R.id.btnSaveUpdateTarget)
+        val btnCancelUpdateActivity = dialogView.findViewById<Button>(R.id.btnCancleUpdateTarget)
 
-        // Set current data into views
         etTargetName.setText(activity.aName)
         etTargetDescription.setText(activity.aDescription)
+        etTimeInput.setText(activity.aTime)
+        etHourInput.setText(activity.aHour)
         checkBoxPin.isChecked = activity.aPin
 
         when (activity.aCategory) {
@@ -238,7 +242,7 @@ class ActivityListFragment : Fragment() {
 
         dialogBuilder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        btnSaveUpdateTarget.setOnClickListener {
+        btnSaveUpdateActivity.setOnClickListener {
             val selectedRadioButtonId = radioGroup.checkedRadioButtonId
             val selectedRadioButtonText = when (selectedRadioButtonId) {
                 R.id.radioButtonLesson -> "Lesson"
@@ -251,6 +255,8 @@ class ActivityListFragment : Fragment() {
 
             activity.aName = etTargetName.text.toString()
             activity.aDescription = etTargetDescription.text.toString()
+            activity.aTime = etTimeInput.text.toString()
+            activity.aHour = etHourInput.text.toString()
             activity.aCategory = selectedRadioButtonText ?: ""
             activity.aPin = checkBoxPin.isChecked
 
@@ -258,11 +264,20 @@ class ActivityListFragment : Fragment() {
             dialogBuilder.dismiss()
         }
 
-        btnCancelUpdateTarget.setOnClickListener {
+        btnCancelUpdateActivity.setOnClickListener {
             dialogBuilder.dismiss()
         }
 
-        // Set dialog width
+        etTimeInput.inputType = InputType.TYPE_NULL
+        etTimeInput.setOnClickListener {
+            showTimeDurationPickerDialog(etTimeInput)
+        }
+
+        etHourInput.inputType = InputType.TYPE_NULL
+        etHourInput.setOnClickListener {
+            showTimePickerDialog(etHourInput)
+        }
+
         dialogBuilder.setOnShowListener {
             val window = dialogBuilder.window
             window?.setLayout(350.dpToPx(requireContext()), ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -271,7 +286,60 @@ class ActivityListFragment : Fragment() {
         dialogBuilder.show()
     }
 
-    // Convert dp to px
+
+    private fun showTimePickerDialog(etHourInput: EditText) {
+        val calendar = Calendar.getInstance()
+        val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
+        val currentMinute = calendar.get(Calendar.MINUTE)
+
+        val timePickerDialog = TimePickerDialog(requireContext(), { _, selectedHour, selectedMinute ->
+            val formattedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
+            etHourInput.setText(formattedTime)
+        }, currentHour, currentMinute, true)
+
+        timePickerDialog.show()
+    }
+
+    private fun showTimeDurationPickerDialog(targetEditText: EditText) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_time_duration_picker, null)
+        val hourPicker = dialogView.findViewById<NumberPicker>(R.id.hourPicker)
+        val minutePicker = dialogView.findViewById<NumberPicker>(R.id.minutePicker)
+        val cancelButton = dialogView.findViewById<Button>(R.id.cancelButton)
+        val okButton = dialogView.findViewById<Button>(R.id.okButton)
+
+        hourPicker.minValue = 0
+        hourPicker.maxValue = 23
+        hourPicker.wrapSelectorWheel = true
+
+        minutePicker.minValue = 0
+        minutePicker.maxValue = 59
+        minutePicker.wrapSelectorWheel = true
+        minutePicker.setFormatter { i -> String.format("%02d", i) }
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
+
+        cancelButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        okButton.setOnClickListener {
+            val selectedHour = hourPicker.value
+            val selectedMinute = minutePicker.value
+            val selectedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
+            targetEditText.setText(selectedTime)
+            dialog.dismiss()
+        }
+        dialog.setOnShowListener {
+            val window = dialog.window
+            window?.setLayout(250.dpToPx(requireContext()), ViewGroup.LayoutParams.WRAP_CONTENT)
+        }
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
+    }
+
     fun Int.dpToPx(context: Context): Int {
         val density = context.resources.displayMetrics.density
         return (this * density).toInt()

@@ -25,7 +25,7 @@ class inputUserName : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setLocaleAndDirection() // Set Locale and layout direction
+        setLocaleAndDirection()
 
         setContentView(R.layout.activity_input_user_name)
 
@@ -36,7 +36,7 @@ class inputUserName : AppCompatActivity() {
             val userName = userNameEditText.text.toString()
 
             if (userName.isEmpty()) {
-                Toast.makeText(this, "Please enter a username", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "لطفا نام کاربری خود را وارد نمایید", Toast.LENGTH_SHORT).show()
             } else {
                 val user = UserEntity(username = userName, userPhone = "", userPassword = "")
                 userViewModel.insert(user)
@@ -55,7 +55,7 @@ class inputUserName : AppCompatActivity() {
         val resources: Resources = resources
         val config: Configuration = resources.configuration
         config.setLocale(locale)
-        config.setLayoutDirection(Locale("en")) // Set layout direction to LTR
+        config.setLayoutDirection(Locale("en"))
         resources.updateConfiguration(config, resources.displayMetrics)
     }
 }

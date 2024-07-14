@@ -17,6 +17,6 @@ import androidx.room.PrimaryKey
 class StagesEntity (
     @PrimaryKey(autoGenerate = true) val stageId: Int = 0,
     val sName: String,
-    val sCheck :Boolean,
+    var sCheck :Boolean,
     var projectOwnerId: Int
 )

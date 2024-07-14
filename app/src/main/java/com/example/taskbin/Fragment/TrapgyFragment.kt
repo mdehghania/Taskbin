@@ -20,7 +20,6 @@ class TrapgyFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_trapgy, container, false)
     }
 
@@ -35,14 +34,11 @@ class TrapgyFragment : Fragment() {
             activity?.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
         }
 
-
         val toDayDateTextView = view.findViewById<TextView>(R.id.toDayDate)
         val today = PersianCalendar()
         val persianDate = "${today.dayOfMonth} ${getPersianMonthName(today.month)} ${today.year}"
         toDayDateTextView.text = persianDate
 
-
-        // Adding TargetListFragment to FrameLayout
         if (savedInstanceState == null) {
             childFragmentManager.beginTransaction()
                 .replace(R.id.frame_container_activity, TargetListFragment())

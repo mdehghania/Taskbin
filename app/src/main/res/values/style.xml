@@ -9,5 +9,12 @@
         <item name="android:background">@android:color/white</item>
         <item name="android:fontFamily">@font/vazir</item>
     </style>
+
+    <style name="CustomDatePickerDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!-- تنظیمات استایل -->
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
+        <item name="android:padding">16dp</item>
+    </style>
 </resources>
 

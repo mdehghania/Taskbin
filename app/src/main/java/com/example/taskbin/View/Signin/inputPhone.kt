@@ -26,7 +26,7 @@ class inputPhone : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setLocaleAndDirection() // Set Locale and layout direction
+        setLocaleAndDirection()
 
         setContentView(R.layout.activity_input_phone)
 
@@ -39,7 +39,7 @@ class inputPhone : AppCompatActivity() {
             val userPhone = phoneEditText.text.toString()
 
             if (userPhone.isEmpty()) {
-                Toast.makeText(this, "Please enter a phone number", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "لطفا شماره تلفن خود را وارد نمایید", Toast.LENGTH_SHORT).show()
             } else {
                 userViewModel.fetchUserByUsername(userName ?: "")
                 userViewModel.userByUsername.observe(this, Observer { user ->
@@ -62,7 +62,7 @@ class inputPhone : AppCompatActivity() {
         val resources: Resources = resources
         val config: Configuration = resources.configuration
         config.setLocale(locale)
-        config.setLayoutDirection(Locale("en")) // Set layout direction to LTR
+        config.setLayoutDirection(Locale("en"))
         resources.updateConfiguration(config, resources.displayMetrics)
     }
 }

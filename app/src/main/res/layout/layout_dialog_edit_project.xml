@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="350dp"
-        android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_width="350dp"
+    android:layout_height="700dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardview1Activity"
@@ -20,253 +19,78 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/AddActivity"
+                    android:id="@+id/projectName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ویرایش کردن"
-                    android:textSize="24dp"
-                    android:layout_centerInParent="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="20dp"
                     android:fontFamily="@font/vazirfdwol"
-                    android:textColor="@color/black">
-
-                </TextView>
+                    android:text="نام پروژه"
+                    android:textColor="@color/black"
+                    android:textSize="24sp" />
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
+
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView2AddActivity"
+            android:id="@+id/cardview2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="0dp"
-            android:layout_marginStart="0dp"
+            android:layout_height="600dp"
+            app:cardCornerRadius="12dp"
             android:layout_marginTop="-20dp"
             app:cardElevation="0dp"
-            app:cardCornerRadius="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardview1Activity"
-            tools:ignore="MissingConstraints">
+            app:layout_constraintTop_toBottomOf="@id/cardview1Activity"
+            >
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp">
+                android:layout_height="match_parent"
+                android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/activityName"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewStages"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/vazirfdwol"
-                    android:text="عنوان فعالیت"
-                    android:textSize="22dp">
-
-                </TextView>
-
-                <EditText
-                    android:id="@+id/activityNameInput"
-                    android:layout_width="380dp"
-                    android:layout_height="50dp"
-                    android:layout_below="@+id/activityName"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/inputs"
-                    android:inputType="text"
-                    android:textColor="#000000"
-                    android:textDirection="rtl"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/activityName"
-                    tools:ignore="UnknownIdInLayout" />
-
-                <RadioGroup
-                    android:id="@+id/radioGroup"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/activityNameInput"
-                    android:layout_marginTop="20dp"
-                    android:layoutDirection="rtl"
-                    android:orientation="horizontal"
-                    android:textAlignment="center">
-
-                    <RadioButton
-                        android:id="@+id/radioButtonLesson"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:background="@drawable/radio1"
-                        android:button="@null" />
-
-                    <RadioButton
-                        android:id="@+id/radioButtonHealth"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:background="@drawable/radio2"
-                        android:button="@null" />
-
-                    <RadioButton
-                        android:id="@+id/radioButtonFun"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:background="@drawable/radio3"
-                        android:button="@null" />
-
-                    <RadioButton
-                        android:id="@+id/radioButtonJob"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:background="@drawable/radio4"
-                        android:button="@null" />
-
-                    <RadioButton
-                        android:id="@+id/radioButtonEtc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/radio5"
-                        android:button="@null" />
-
-                </RadioGroup>
-
-                <TextView
-                    android:id="@+id/activityDes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/radioGroup"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/vazirfdwol"
-                    android:text="توضیحات"
-                    android:textSize="22dp">
-                </TextView>
-
-                <EditText
-                    android:id="@+id/activityDesInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/activityDes"
-                    android:background="@drawable/inputs"
-                    android:layout_marginTop="0dp"
-                    android:ems="10"
-                    android:gravity="start|top"
-                    android:inputType="textMultiLine"
-                    tools:layout_editor_absoluteX="150dp"
-                    tools:layout_editor_absoluteY="220dp" />
-                <TextView
-                    android:id="@+id/activityTime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/activityDesInput"
-                    android:layout_marginTop="30dp"
-                    android:fontFamily="@font/vazirfdwol"
-                    android:text="زمان مورد نیاز"
-                    android:textSize="22dp">
-                </TextView>
-                <EditText
-                    android:id="@+id/activityTimeInput"
-                    android:layout_width="230dp"
-                    android:layout_height="50dp"
+                    android:layout_above="@+id/btnSaveUpdateProject"
                     android:layout_alignParentRight="true"
-                    android:layout_below="@+id/activityTime"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/inputs"
-                    android:inputType="text"
-                    android:layoutDirection="rtl"
-                    android:textColor="#000000"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginRight="5dp"
                     android:textDirection="rtl"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/activityTime" />
-                <CheckBox
-                    android:id="@+id/checkButtonPin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/activityTime"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_toStartOf="@+id/activityTimeInput"
-                    android:background="@drawable/radio_pin"
-                    android:button="@null" />
-                <TextView
-                    android:id="@+id/activityRemember"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/activityTimeInput"
-                    android:layout_marginTop="40dp"
-                    android:fontFamily="@font/vazirfdwol"
-                    android:text="یادآوری"
-                    android:textSize="22dp">
-
-                </TextView>
-                <TextView
-                    android:id="@+id/activityRememberHoure"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@id/activityRemember"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/vazirfdwol"
-                    android:text="ساعت"
-                    android:textSize="22dp">
-
-                </TextView>
-                <EditText
-                    android:id="@+id/activityHoureInput"
-                    android:layout_width="230dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@+id/activityRemember"
-                    android:layout_marginEnd="14dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_toStartOf="@+id/activityRememberHoure"
-                    android:background="@drawable/inputs"
-                    android:inputType="text"
-                    android:layoutDirection="rtl"
-                    android:textColor="#000000"
-                    android:textDirection="rtl"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/activityTime" />
-                <Button
-                    android:id="@+id/btnSaveUpdateTarget"
-                    android:layout_width="140dp"
-                    android:layout_height="55dp"
-                    android:layout_below="@+id/activityRememberHoure"
-                    android:backgroundTint="@color/orange"
-                    android:fontFamily="@font/vazirfdwol"
-                    android:text="ذخیره "
-                    android:textColor="@color/white"
-                    app:cornerRadius="10dp"
-                    android:layout_marginTop="50dp"
-                    android:layout_alignParentRight="true"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.496"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
                 <Button
-                    android:id="@+id/btnCancleUpdateTarget"
-                    android:layout_width="140dp"
-                    android:layout_height="55dp"
-                    android:layout_below="@+id/activityHoureInput"
+                    android:id="@+id/btnSaveUpdateProject"
+                    android:layout_width="200dp"
+                    android:layout_height="53dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentLeft="true"
                     android:backgroundTint="@color/orange"
                     android:fontFamily="@font/vazirfdwol"
-                    android:text="لغو"
+                    android:text="ثبت"
                     android:textColor="@color/white"
                     app:cornerRadius="10dp"
-                    android:layout_marginTop="40dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.496"
-                    android:layout_alignParentLeft="true"
-                    app:layout_constraintVertical_bias="0.0" />
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="30dp"
+                    />
+
+
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -1,5 +1,4 @@
-package com.example.taskbin.Fragment
-
+package com.example.taskbin.View
 
 import SpaceItemDecoration
 import android.app.AlertDialog
@@ -24,8 +23,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.taskbin.Model.ProjectEntity
 import com.example.taskbin.MyApplication
 import com.example.taskbin.R
-import com.example.taskbin.View.ProjectAdapter
+import com.example.taskbin.StagesAdapter
 import com.example.taskbin.ViewModel.ProjectViewModel
+import com.example.taskbin.ViewModel.StagesViewModel
 import com.example.taskbin.ViewModel.ViewModelFactory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -35,9 +35,18 @@ class ProjectListFragment : Fragment() {
     private val projectViewModel: ProjectViewModel by viewModels {
         ViewModelFactory(
             (requireActivity().application as MyApplication).userRepository,
-            null, // چون در اینجا نیاز به ActivityRepository نداریم
-            null, // چون در اینجا نیاز به TargetRepository نداریم
+            null,
+            null,
             (requireActivity().application as MyApplication).projectRepository
+        )
+    }
+    private val stagesViewModel: StagesViewModel by viewModels {
+        ViewModelFactory(
+            (requireActivity().application as MyApplication).userRepository,
+            null,
+            null,
+            (requireActivity().application as MyApplication).projectRepository,
+            (requireActivity().application as MyApplication).stagesRepository
         )
     }
 
@@ -53,14 +62,21 @@ class ProjectListFragment : Fragment() {
 
         recyclerView = view.findViewById(R.id.recyclerViewProject)
 
-        adapter = ProjectAdapter(mutableListOf(), { projectId, isChecked ->
-            projectViewModel.updateCompletion(projectId, isChecked)
-            sortAndNotifyAdapter()
-        }, { project ->
-            if (!project.completed) { // فقط آیتم‌هایی که تکمیل نشده‌اند قابل ویرایش هستند
-                showEditDialog(project)
-            }
-        })
+        adapter = ProjectAdapter(
+            mutableListOf(),
+            { projectId, isChecked ->
+                projectViewModel.updateCompletion(projectId, isChecked)
+                sortAndNotifyAdapter()
+            },
+            { project ->
+                if (!project.completed) {
+                    showEditDialog(project)
+                }
+            },
+            projectViewModel,
+            viewLifecycleOwner
+        )
+
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
@@ -213,36 +229,53 @@ class ProjectListFragment : Fragment() {
     }
 
     private fun showEditDialog(project: ProjectEntity) {
-        val dialogView = layoutInflater.inflate(R.layout.layout_dialog_edit_target, null)
-//        val etTargetName = dialogView.findViewById<EditText>(R.id.targetNameInput)
-//        val etTargetDescription = dialogView.findViewById<EditText>(R.id.targetDesInput)
-//        val btnSaveUpdateTarget = dialogView.findViewById<Button>(R.id.btnSaveUpdateTarget)
-        val btnCancleUpdateTarget = dialogView.findViewById<Button>(R.id.btnCancleUpdateTarget)
+        val dialogView = layoutInflater.inflate(R.layout.layout_dialog_edit_project, null)
+        val tvProjectName: TextView = dialogView.findViewById(R.id.projectName)
+        val recycleView: RecyclerView = dialogView.findViewById(R.id.recyclerViewStages)
+        val btnSaveUpdateProject = dialogView.findViewById<Button>(R.id.btnSaveUpdateProject)
 
-//        etTargetName.setText(target.tName)
-//        etTargetDescription.setText(target.tDesc)
+        tvProjectName.text = project.pName
+
+        val stagesAdapter = StagesAdapter(emptyList()) { stage, isChecked ->
+            stage.sCheck = isChecked
+        }
+        recycleView.adapter = stagesAdapter
+        recycleView.layoutManager = LinearLayoutManager(requireContext())
 
         val dialogBuilder = AlertDialog.Builder(requireContext())
             .setView(dialogView)
             .create()
 
+        projectViewModel.getStagesByProjectOwnerId(project.projectId).observe(viewLifecycleOwner) { stages ->
+            stages?.let {
+                stagesAdapter.updateStages(it)
+            }
+        }
+
         dialogBuilder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-//        btnSaveUpdateTarget.setOnClickListener {
-//            target.tName = etTargetName.text.toString()
-//            target.tDesc = etTargetDescription.text.toString()
-//
-//            targetViewModel.update(target)
-//            sortAndNotifyAdapter() // مرتب‌سازی پس از به‌روزرسانی داده‌ها
-//            dialogBuilder.dismiss()
-//        }
+        btnSaveUpdateProject.setOnClickListener {
+            val stages = stagesAdapter.getStages()
 
-        btnCancleUpdateTarget.setOnClickListener {
+            if (stages.isEmpty()) {
+                projectViewModel.updateCompletion(project.projectId, true)
+                project.completed = true
+                adapter.updateProjectCompletion(project.projectId, true, 100) // 100 درصد به معنی تکمیل شدن کامل
+            } else {
+                stages.forEach { stage ->
+                    stagesViewModel.updateStage(stage)
+                }
+            }
+            sortAndNotifyAdapter()
             dialogBuilder.dismiss()
         }
+
+
+
+
         dialogBuilder.setOnShowListener {
             val window = dialogBuilder.window
-            window?.setLayout(350.dpToPx(requireContext()), ViewGroup.LayoutParams.WRAP_CONTENT)
+            window?.setLayout(360.dpToPx(requireContext()), ViewGroup.LayoutParams.WRAP_CONTENT)
         }
 
         dialogBuilder.show()

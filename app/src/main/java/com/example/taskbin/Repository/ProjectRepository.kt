@@ -1,6 +1,5 @@
 package com.example.taskbin.Repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.taskbin.Dao.ProjectDao
 import com.example.taskbin.Model.ProjectEntity
@@ -21,11 +20,7 @@ class ProjectRepository(private val projectDao: ProjectDao) {
         projectDao.delete(project)
     }
 
-    //    suspend fun getProjectsByUser(userId: Int): List<ProjectEntity> {
-//        return projectDao.getProjectsByUser(userId)
-//    }
     fun getProjectsByUser(userId: Int): LiveData<List<ProjectEntity>> {
-        Log.d("ProjectRepository", "Fetching projects for userId: $userId")
         return projectDao.getProjectsByUserOwnerId(userId)
     }
 
@@ -33,8 +28,9 @@ class ProjectRepository(private val projectDao: ProjectDao) {
         projectDao.insertProjectWithStages(project, stages)
     }
 
-    suspend fun getProjectWithStages(projectId: Int) = projectDao.getProjectWithStages(projectId)
-
+    suspend fun getStagesByProjectOwnerId(projectOwnerId: Int): List<StagesEntity> {
+        return projectDao.getStagesByProjectOwnerId(projectOwnerId)
+    }
 
     suspend fun updateCompletion(projectId: Int, completed: Boolean) {
         projectDao.updateCompletion(projectId, completed)

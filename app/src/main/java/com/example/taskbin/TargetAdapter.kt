@@ -27,10 +27,10 @@ class TargetAdapter(
         private val cardView: CardView = itemView.findViewById(R.id.cardView)
         private val tvActivityName: TextView = itemView.findViewById(R.id.tvActivityName)
         private val cbActivity: CheckBox = itemView.findViewById(R.id.cbActivity)
-        private val tvShowDate: TextView = itemView.findViewById(R.id.showdate) // اضافه کردن TextView
+        private val tvShowDate: TextView = itemView.findViewById(R.id.showdate)
 
         init {
-            cbActivity.setOnCheckedChangeListener(null) // جلوگیری از تریگر ناخواسته در هنگام بایند کردن
+            cbActivity.setOnCheckedChangeListener(null)
             cbActivity.setOnCheckedChangeListener { _, isChecked ->
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
@@ -72,7 +72,7 @@ class TargetAdapter(
             tvActivityName.text = target.tName
             cbActivity.isChecked = target.completed
             cardView.alpha = if (target.completed) 0.5f else 1f
-            // فرمت و نمایش تاریخ به شمسی
+
             val persianCalendar = PersianCalendar().apply {
                 timeInMillis = target.timestamp
             }
@@ -107,12 +107,12 @@ class TargetAdapter(
     }
 
     fun updateTargets(targets: List<TargetEntity>) {
-        this.targets = targets.toMutableList()  // تبدیل به MutableList
+        this.targets = targets.toMutableList()
         notifyDataSetChanged()
     }
 
     fun updateTargetsWithHandler(targets: List<TargetEntity>) {
-        this.targets = targets.toMutableList()  // تبدیل به MutableList
+        this.targets = targets.toMutableList()
         Handler(Looper.getMainLooper()).post {
             notifyDataSetChanged()
         }
@@ -123,7 +123,7 @@ class TargetAdapter(
     }
 
     fun removeTargetAtPosition(position: Int) {
-        targets.removeAt(position)  // حذف آیتم
+        targets.removeAt(position)
         notifyItemRemoved(position)
     }
 }
