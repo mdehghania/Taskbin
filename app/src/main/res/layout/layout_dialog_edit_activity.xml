@@ -134,11 +134,90 @@
 
                 </RadioGroup>
 
+
+                <TextView
+                    android:id="@+id/subjectLesson"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/radioGroup"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/vazir"
+                    android:text="درس"
+                    android:textSize="12dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="8dp"
+                    android:textAlignment="center"
+                    >
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/subjectHealth"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/radioGroup"
+                    android:layout_toStartOf="@+id/subjectLesson"
+                    android:fontFamily="@font/vazir"
+                    android:text="سلامت"
+                    android:textSize="12dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="25dp"
+                    android:textAlignment="center"
+
+                    >
+
+                </TextView>
+                <TextView
+                    android:id="@+id/subjectFun"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/radioGroup"
+                    android:layout_toStartOf="@+id/subjectHealth"
+                    android:fontFamily="@font/vazir"
+                    android:text="تفریح"
+                    android:textSize="12dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="27dp"
+                    android:textAlignment="center"
+                    >
+
+                </TextView>
+                <TextView
+                    android:id="@+id/subjectJob"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/radioGroup"
+                    android:layout_toStartOf="@+id/subjectFun"
+                    android:fontFamily="@font/vazir"
+                    android:text="کار"
+                    android:textSize="12dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="28dp"
+                    android:textAlignment="center"
+                    >
+
+                </TextView>
+                <TextView
+                    android:id="@+id/subjectEtc"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/radioGroup"
+                    android:layout_toStartOf="@+id/subjectJob"
+                    android:fontFamily="@font/vazir"
+                    android:text="غیره"
+                    android:textSize="12dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="28dp"
+                    android:textAlignment="center"
+                    >
+
+                </TextView>
+
                 <TextView
                     android:id="@+id/activityDes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/radioGroup"
+                    android:layout_below="@id/subjectLesson"
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/vazir"
                     android:text="توضیحات"
