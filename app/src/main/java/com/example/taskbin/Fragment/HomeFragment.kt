@@ -17,7 +17,6 @@ import com.aminography.primecalendar.persian.PersianCalendar
 import com.example.taskbin.DateAdapter
 import com.example.taskbin.R
 import com.example.taskbin.View.ActivityListFragment
-import com.example.taskbin.View.AddActivityFragment
 import com.example.taskbin.View.Profile
 import com.example.taskbin.ViewModel.SharedViewModel
 import com.example.taskbin.addDay
@@ -148,20 +147,6 @@ class HomeFragment : Fragment() {
             .replace(R.id.fragmentContainerView, fragment)
             .commit()
     }
-
-    private fun startAddActivityFragment() {
-        val fragment = AddActivityFragment()
-        val bundle = Bundle()
-        bundle.putLong("selectedDate", selectedDate.timeInMillis)
-        fragment.arguments = bundle
-
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainerView, fragment)
-            .addToBackStack(null)
-            .commit()
-    }
-
-
 
     private fun PersianCalendar.isSameDay(other: PersianCalendar): Boolean {
         return this.year == other.year && this.month == other.month && this.dayOfMonth == other.dayOfMonth

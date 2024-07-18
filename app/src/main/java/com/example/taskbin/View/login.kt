@@ -83,7 +83,7 @@ class login : AppCompatActivity() {
         })
 
         promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("ورود اثر انگشت برای برنامه من")
+            .setTitle("ورود اثر انگشت برای برنامه تسکبین")
             .setSubtitle("با استفاده از اثر انگشت خود وارد شوید")
             .setNegativeButtonText("از رمز عبور حساب کاربری استفاده کنید")
             .build()

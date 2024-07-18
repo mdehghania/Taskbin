@@ -19,11 +19,29 @@ class ReminderBroadcastReceiver : BroadcastReceiver() {
         val notificationId = intent.getIntExtra("notification_id", 0)
 
         createNotificationChannel(context)
-        val notificationIntent = Intent(context, MainActivity::class.java)
-        val pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val notificationIntent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+
+        val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            PendingIntent.getActivity(
+                context,
+                notificationId,
+                notificationIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+        } else {
+            PendingIntent.getActivity(
+                context,
+                notificationId,
+                notificationIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
+        }
 
         val notification = NotificationCompat.Builder(context, "taskbin_channel_id")
-            .setSmallIcon(R.drawable.taskbin196_196)
+            .setSmallIcon(R.drawable.iconnotif)
             .setContentTitle("یادآوری")
             .setContentText("$activityName یادت نره")
             .setPriority(NotificationCompat.PRIORITY_HIGH)

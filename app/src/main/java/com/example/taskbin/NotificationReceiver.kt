@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.example.taskbin.View.MainActivity
 
@@ -19,7 +20,7 @@ class NotificationReceiver : BroadcastReceiver() {
         val channelId = "taskbin_channel"
         val channelName = "TaskBin Notifications"
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH)
             notificationChannel.description = "TaskBin Reminder Channel"
             notificationChannel.enableLights(true)
@@ -36,15 +37,24 @@ class NotificationReceiver : BroadcastReceiver() {
             putExtra("projectId", projectId)
         }
 
-        val pendingIntent = PendingIntent.getActivity(
-            context,
-            projectId,
-            mainIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT
-        )
+        val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            PendingIntent.getActivity(
+                context,
+                projectId,
+                mainIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+        } else {
+            PendingIntent.getActivity(
+                context,
+                projectId,
+                mainIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
+        }
 
         val notification = NotificationCompat.Builder(context, channelId)
-            .setSmallIcon(R.drawable.taskbin196_196)
+            .setSmallIcon(R.drawable.iconnotif)
             .setContentTitle("یادآوری")
             .setContentText("$projectName یادت نره")
             .setPriority(NotificationCompat.PRIORITY_HIGH)

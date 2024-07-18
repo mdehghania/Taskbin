@@ -6,8 +6,10 @@ import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.text.InputType
 import android.view.LayoutInflater
@@ -21,6 +23,8 @@ import android.widget.NumberPicker
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -66,10 +70,18 @@ class AddActivityFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_add_activity, container, false)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 101)
+            }
+        }
+
         btnBackAddActivity = view.findViewById(R.id.btnBackAddActivity)
         btnSaveActivity = view.findViewById(R.id.btnSaveActivity)
         activityNameInput = view.findViewById(R.id.activityNameInput)
@@ -267,8 +279,10 @@ class AddActivityFragment : Fragment() {
         activityViewModel.insert(activity)
         Toast.makeText(requireContext(), "فعالیت با موفقیت ذخیره شد.", Toast.LENGTH_SHORT).show()
 
-        // تنظیم نوتیفیکیشن
-        setNotification(nameInput, selectedDate, hourInput)
+        // تنظیم نوتیفیکیشن در صورتی که hourInput خالی نباشد
+        if (hourInput.isNotEmpty()) {
+            setNotification(nameInput, selectedDate, hourInput)
+        }
 
         sharedViewModel.setSelectedDate(selectedDate)
 
@@ -290,7 +304,13 @@ class AddActivityFragment : Fragment() {
             putExtra("activity_name", activityName)
             putExtra("notification_id", activityName.hashCode())
         }
-        val pendingIntent = PendingIntent.getBroadcast(requireContext(), activityName.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getBroadcast(
+            requireContext(),
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
         val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
     }
@@ -300,4 +320,3 @@ class AddActivityFragment : Fragment() {
         return (this * density).toInt()
     }
 }
-

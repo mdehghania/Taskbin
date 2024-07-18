@@ -201,6 +201,11 @@ class ProjectAdapter(
         }
     }
 
+    fun sortProjectsByPin() {
+        projects.sortWith(compareByDescending<ProjectEntity> { it.pPin }.thenBy { it.completed })
+        notifyDataSetChanged()
+    }
+
     private fun checkAndUpdateCompletion(project: ProjectEntity, progress: Int, itemView: View) {
         if (progress == 100 && !project.completed) {
             project.completed = true

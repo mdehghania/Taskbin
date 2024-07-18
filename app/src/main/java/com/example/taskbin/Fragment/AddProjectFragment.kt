@@ -1,11 +1,14 @@
 package com.example.taskbin.Fragment
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -15,10 +18,12 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TimePicker
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -38,6 +43,7 @@ import java.util.Calendar
 import java.util.TimeZone
 
 class AddProjectFragment : Fragment() {
+    private lateinit var btnBackAddProject: ImageView
 
     private lateinit var stagesContainer: LinearLayout
     private var stageCount = 0
@@ -60,6 +66,7 @@ class AddProjectFragment : Fragment() {
         )
     }
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -67,6 +74,18 @@ class AddProjectFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_add_project, container, false)
         stagesContainer = view.findViewById(R.id.stagesContainer)
         val addStageButton = view.findViewById<ImageButton>(R.id.addStages4)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 101)
+            }
+        }
+
+        btnBackAddProject = view.findViewById(R.id.btnBackAddProject)
+        btnBackAddProject.setOnClickListener {
+            activity?.onBackPressed()
+        }
+
 
         projectNameInput = view.findViewById(R.id.projectNameInput)
         projectHourInput = view.findViewById(R.id.projectHoureInput)
@@ -409,9 +428,15 @@ class AddProjectFragment : Fragment() {
             putExtra("projectId", 0)
             putExtra("project_name", projectName)
         }
-        val pendingIntent = PendingIntent.getBroadcast(requireContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-        val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
+        val pendingIntent = PendingIntent.getBroadcast(
+            requireContext(),
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
     }
 

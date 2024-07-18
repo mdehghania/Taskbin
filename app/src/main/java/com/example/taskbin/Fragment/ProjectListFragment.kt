@@ -260,7 +260,7 @@ class ProjectListFragment : Fragment() {
             if (stages.isEmpty()) {
                 projectViewModel.updateCompletion(project.projectId, true)
                 project.completed = true
-                adapter.updateProjectCompletion(project.projectId, true, 100) // 100 درصد به معنی تکمیل شدن کامل
+                adapter.updateProjectCompletion(project.projectId, true, 100)
             } else {
                 stages.forEach { stage ->
                     stagesViewModel.updateStage(stage)
