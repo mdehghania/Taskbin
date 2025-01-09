@@ -11,6 +11,6 @@
 
 
 ## نصب و اجرا:
-1. فایل نصبی (APK) را از قسمت [Releases](https://github.com/mdehghani/repository/releases) دانلود کنید.
+1. فایل نصبی (APK) را از قسمت [Releases](https://github.com/mdehghania/Taskbin/releases/tag/v1.0.0) دانلود کنید.
 2. فایل APK را روی دستگاه اندرویدی خود نصب کنید.
 3. برنامه را باز کنید و شروع به استفاده کنید.
